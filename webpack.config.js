@@ -1,6 +1,11 @@
 const path = require('path')
+const dotenv = require('dotenv')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const { SourceMapDevToolPlugin } = require('webpack')
+const { SourceMapDevToolPlugin, EnvironmentPlugin } = require('webpack')
+
+console.log(path.join(__dirname, '.env'))
+
+dotenv.config({ path: path.join(__dirname, '.env') })
 
 module.exports = {
 	devServer: {
@@ -43,6 +48,9 @@ module.exports = {
 		},
 	},
 	plugins: [
+		new EnvironmentPlugin({
+			MAP_BOX_ACCESS_TOKEN: process.env.MAP_BOX_ACCESS_TOKEN,
+		}),
 		new HTMLWebpackPlugin({
 			template: 'public/index.html',
 		}),
