@@ -3,8 +3,6 @@ const dotenv = require('dotenv')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { SourceMapDevToolPlugin, EnvironmentPlugin } = require('webpack')
 
-console.log(path.join(__dirname, '.env'))
-
 dotenv.config({ path: path.join(__dirname, '.env') })
 
 module.exports = {
