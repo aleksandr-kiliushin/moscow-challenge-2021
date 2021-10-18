@@ -9,5 +9,10 @@ export const App = () => {
 		// dispatch(getCurrentUserData())
 	}, [])
 
-	return <div className={s.Layout}>heh</div>
+	return (
+		<div className={s.Layout}>
+			<div>map</div>
+			<div>table</div>
+		</div>
+	)
 }
