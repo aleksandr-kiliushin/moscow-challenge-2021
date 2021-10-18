@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react'
 import Leaflet from 'leaflet'
 
+// Components
+import { DataPane } from './DataPane'
+
 // Styles
 import s from './index.module.css'
 
-console.log(process.env.MAP_BOX_ACCESS_TOKEN)
+// Data
+import ao from './data/mo.json'
 
 export const App = () => {
 	/** Initialize app. */
 	useEffect(() => {
-		const myMap = Leaflet.map('mapid').setView([55.67, 37.5], 10)
+		const myMap = Leaflet.map('mapid').setView([54.6, 37.42], 10)
 
 		Leaflet.tileLayer(
 			'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
@@ -23,12 +27,29 @@ export const App = () => {
 				accessToken: process.env.MAP_BOX_ACCESS_TOKEN,
 			},
 		).addTo(myMap)
+
+		ao.features.forEach((feature) => {
+			Leaflet.polygon(
+				feature.geometry.coordinates[0].map(([x, y]) => [y, x]),
+				// feature.geometry.coordinates[0].map(([x, y]) => [y, x]),
+				// {
+				// 	color: feature.properties.fill,
+				// },
+			).addTo(myMap)
+		})
+
+		// var south = Leaflet.polygon([
+		// 	[51.509, -0.08],
+		// 	[51.503, -0.06],
+		// 	[51.51, -0.047],
+		// ]).addTo(myMap)
 	}, [])
 
 	return (
 		<div className={s.Layout}>
 			<div id="mapid">map</div>
-			<div>table</div>
+
+			<DataPane />
 		</div>
 	)
 }
