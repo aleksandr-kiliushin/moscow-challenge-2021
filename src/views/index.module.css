@@ -2,12 +2,3 @@
 	height: 100vh;
 	width: 100vw;
 }
-
-.ViewWithNavbar {
-	height: calc(100vh - var(--navbar-height));
-	overflow-y: scroll;
-}
-
-.ViewWithoutNavbar {
-	height: 100vh;
-}

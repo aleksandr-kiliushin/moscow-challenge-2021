@@ -1,144 +1,146 @@
-import { createSlice } from '@reduxjs/toolkit'
+export const x = 42
 
-// Types
-import { PayloadAction } from '@reduxjs/toolkit'
-import { AppThunk } from '#models/store'
-import { ILoadingStatus } from '#interfaces/common'
-import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from '#interfaces/finance'
+// import { createSlice } from '@reduxjs/toolkit'
 
-// Utils
-import { Http } from '#utils/Http'
+// // Types
+// import { PayloadAction } from '@reduxjs/toolkit'
+// import { AppThunk } from '#models/store'
+// import { ILoadingStatus } from '#interfaces/common'
+// import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from '#interfaces/finance'
 
-const initialState: IState = {
-	categories: {
-		items: [],
-		status: 'idle',
-	},
-	categoryTypes: {
-		items: [],
-		status: 'idle',
-	},
-	records: {
-		notTrashed: {
-			items: [],
-			status: 'idle',
-		},
-		trashed: {
-			items: [],
-			status: 'idle',
-		},
-	},
-}
+// // Utils
+// import { Http } from '#utils/Http'
 
-const slice = createSlice({
-	name: 'finance',
-	initialState,
-	reducers: {
-		setCategories: (state, action: PayloadAction<IFinanceCategory[]>) => {
-			state.categories = {
-				items: action.payload,
-				status: 'success',
-			}
-		},
-		setNotTrashedRecords: (state, action: PayloadAction<IFinanceRecord[]>) => {
-			state.records.notTrashed = {
-				items: action.payload,
-				status: 'success',
-			}
-		},
-		setTrashedRecords: (state, action: PayloadAction<IFinanceRecord[]>) => {
-			state.records.trashed = {
-				items: action.payload,
-				status: 'success',
-			}
-		},
-		setCategoryTypes: (state, action: PayloadAction<IFinanceCategoryType[]>) => {
-			state.categoryTypes = {
-				items: action.payload,
-				status: 'success',
-			}
-		},
-		updateCategory: (state, action: PayloadAction<IFinanceCategory>) => {
-			const categoryIndex = state.categories.items.findIndex(
-				(category) => category.id === action.payload.id,
-			)
+// const initialState: IState = {
+// 	categories: {
+// 		items: [],
+// 		status: 'idle',
+// 	},
+// 	categoryTypes: {
+// 		items: [],
+// 		status: 'idle',
+// 	},
+// 	records: {
+// 		notTrashed: {
+// 			items: [],
+// 			status: 'idle',
+// 		},
+// 		trashed: {
+// 			items: [],
+// 			status: 'idle',
+// 		},
+// 	},
+// }
 
-			state.categories.items[categoryIndex] = action.payload
-		},
-	},
-})
+// const slice = createSlice({
+// 	name: 'finance',
+// 	initialState,
+// 	reducers: {
+// 		setCategories: (state, action: PayloadAction<IFinanceCategory[]>) => {
+// 			state.categories = {
+// 				items: action.payload,
+// 				status: 'success',
+// 			}
+// 		},
+// 		setNotTrashedRecords: (state, action: PayloadAction<IFinanceRecord[]>) => {
+// 			state.records.notTrashed = {
+// 				items: action.payload,
+// 				status: 'success',
+// 			}
+// 		},
+// 		setTrashedRecords: (state, action: PayloadAction<IFinanceRecord[]>) => {
+// 			state.records.trashed = {
+// 				items: action.payload,
+// 				status: 'success',
+// 			}
+// 		},
+// 		setCategoryTypes: (state, action: PayloadAction<IFinanceCategoryType[]>) => {
+// 			state.categoryTypes = {
+// 				items: action.payload,
+// 				status: 'success',
+// 			}
+// 		},
+// 		updateCategory: (state, action: PayloadAction<IFinanceCategory>) => {
+// 			const categoryIndex = state.categories.items.findIndex(
+// 				(category) => category.id === action.payload.id,
+// 			)
 
-export const {
-	setCategories,
-	setCategoryTypes,
-	setNotTrashedRecords,
-	setTrashedRecords,
-	updateCategory,
-} = slice.actions
-export const financeReducer = slice.reducer
+// 			state.categories.items[categoryIndex] = action.payload
+// 		},
+// 	},
+// })
 
-// Thunks
-export const getCategories = (): AppThunk => async (dispatch, getState) => {
-	if (getState().finance.categories.status !== 'idle') return
-	const categories = await Http.get({ url: 'api/finance-category' })
-	dispatch(setCategories(categories))
-}
-export const getCategoryTypes = (): AppThunk => async (dispatch, getState) => {
-	if (getState().finance.categoryTypes.status !== 'idle') return
-	const categoryTypes = await Http.get({ url: 'api/finance-category-type' })
-	dispatch(setCategoryTypes(categoryTypes))
-}
-export const getRecords = (): AppThunk => async (dispatch, getState) => {
-	if (getState().finance.records.notTrashed.status === 'idle') {
-		const records = await Http.get({ url: 'api/finance-record?isTrashed=false' })
-		dispatch(setNotTrashedRecords(records))
-	}
+// export const {
+// 	setCategories,
+// 	setCategoryTypes,
+// 	setNotTrashedRecords,
+// 	setTrashedRecords,
+// 	updateCategory,
+// } = slice.actions
+// export const financeReducer = slice.reducer
 
-	if (getState().finance.records.trashed.status === 'idle') {
-		const records = await Http.get({ url: 'api/finance-record?isTrashed=true' })
-		dispatch(setTrashedRecords(records))
-	}
-}
-export const updateCategoryTc =
-	({
-		categoryId,
-		name,
-		typeId,
-	}: {
-		categoryId: IFinanceCategory['id']
-		name: IFinanceCategory['name']
-		typeId: IFinanceCategoryType['id']
-	}): AppThunk =>
-	async (dispatch) => {
-		const category = await Http.patch({
-			payload: {
-				name,
-				typeId,
-			},
-			url: 'api/finance-category/' + categoryId,
-		})
+// // Thunks
+// export const getCategories = (): AppThunk => async (dispatch, getState) => {
+// 	if (getState().finance.categories.status !== 'idle') return
+// 	const categories = await Http.get({ url: 'api/finance-category' })
+// 	dispatch(setCategories(categories))
+// }
+// export const getCategoryTypes = (): AppThunk => async (dispatch, getState) => {
+// 	if (getState().finance.categoryTypes.status !== 'idle') return
+// 	const categoryTypes = await Http.get({ url: 'api/finance-category-type' })
+// 	dispatch(setCategoryTypes(categoryTypes))
+// }
+// export const getRecords = (): AppThunk => async (dispatch, getState) => {
+// 	if (getState().finance.records.notTrashed.status === 'idle') {
+// 		const records = await Http.get({ url: 'api/finance-record?isTrashed=false' })
+// 		dispatch(setNotTrashedRecords(records))
+// 	}
 
-		dispatch(updateCategory(category))
-	}
+// 	if (getState().finance.records.trashed.status === 'idle') {
+// 		const records = await Http.get({ url: 'api/finance-record?isTrashed=true' })
+// 		dispatch(setTrashedRecords(records))
+// 	}
+// }
+// export const updateCategoryTc =
+// 	({
+// 		categoryId,
+// 		name,
+// 		typeId,
+// 	}: {
+// 		categoryId: IFinanceCategory['id']
+// 		name: IFinanceCategory['name']
+// 		typeId: IFinanceCategoryType['id']
+// 	}): AppThunk =>
+// 	async (dispatch) => {
+// 		const category = await Http.patch({
+// 			payload: {
+// 				name,
+// 				typeId,
+// 			},
+// 			url: 'api/finance-category/' + categoryId,
+// 		})
 
-// Types
-interface IState {
-	categories: {
-		items: IFinanceCategory[]
-		status: ILoadingStatus
-	}
-	categoryTypes: {
-		items: IFinanceCategoryType[]
-		status: ILoadingStatus
-	}
-	records: {
-		notTrashed: {
-			items: IFinanceRecord[]
-			status: ILoadingStatus
-		}
-		trashed: {
-			items: IFinanceRecord[]
-			status: ILoadingStatus
-		}
-	}
-}
+// 		dispatch(updateCategory(category))
+// 	}
+
+// // Types
+// interface IState {
+// 	categories: {
+// 		items: IFinanceCategory[]
+// 		status: ILoadingStatus
+// 	}
+// 	categoryTypes: {
+// 		items: IFinanceCategoryType[]
+// 		status: ILoadingStatus
+// 	}
+// 	records: {
+// 		notTrashed: {
+// 			items: IFinanceRecord[]
+// 			status: ILoadingStatus
+// 		}
+// 		trashed: {
+// 			items: IFinanceRecord[]
+// 			status: ILoadingStatus
+// 		}
+// 	}
+// }

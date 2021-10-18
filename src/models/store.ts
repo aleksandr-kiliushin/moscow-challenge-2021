@@ -2,8 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 
 // Reducers
 import { commonReducer } from './common'
-import { financeReducer } from './finance'
-import { userReducer } from './user'
 
 // Types
 import { Action, ThunkAction } from '@reduxjs/toolkit'
@@ -11,8 +9,6 @@ import { Action, ThunkAction } from '@reduxjs/toolkit'
 export const store = configureStore({
 	reducer: {
 		common: commonReducer,
-		finance: financeReducer,
-		user: userReducer,
 	},
 })
 

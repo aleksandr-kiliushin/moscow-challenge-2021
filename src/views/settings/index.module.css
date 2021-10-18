@@ -1,7 +1,0 @@
-.TableHeaderRow {
-	grid-template-columns: 38% 38% 24%;
-}
-
-.TableRow {
-	grid-template-columns: 38% 38% 12% 12%;
-}
