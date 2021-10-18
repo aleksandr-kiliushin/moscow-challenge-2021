@@ -1,0 +1,13 @@
+.TableHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.TableHeaderRow {
+	grid-template-columns: 23% 29% 24% 24%;
+}
+
+.TableRow {
+	grid-template-columns: 23% 29% 24% 12% 12%;
+}

@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"baseUrl": ".",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"module": "esnext",
+		"moduleResolution": "node",
+		"noEmit": true,
+		"paths": {
+			"#components/*": ["src/components/*"],
+			"#interfaces/*": ["../server/src/interfaces/*"],
+			"#models/*": ["src/models/*"],
+			"#utils/*": ["src/utils/*"],
+			"#views/*": ["src/views/*"]
+		},
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es6"
+	},
+	"exclude": ["node_modules"],
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
+	"files": ["declarations.d.ts"]
+}

@@ -1,0 +1,24 @@
+.Navbar {
+	position: fixed;
+	bottom: 0;
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	justify-content: space-around;
+	height: var(--navbar-height);
+	width: 100%;
+	background: var(--color-theme-1);
+}
+
+.SectionLink > svg {
+	height: 40px;
+	width: 40px;
+	fill: lightgray;
+	transition: height 0.15s, width 0.15s, fill 0.15s;
+}
+
+.ActiveSectionLink > svg {
+	height: 55px;
+	width: 55px;
+	fill: white;
+}
