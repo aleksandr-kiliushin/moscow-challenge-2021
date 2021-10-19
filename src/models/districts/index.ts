@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 // Data
+import aosData from '../../data/ao.json'
 import geoData from '../../data/mo.json'
-
-// Types
-import { PayloadAction } from '@reduxjs/toolkit'
+import schoolsData from '../../data/schools.json'
 
 const initialState: IState = {
+	aos: [],
 	districts: [],
+	schools: [],
 }
 
 const slice = createSlice({
@@ -23,19 +24,47 @@ const slice = createSlice({
 
 			state.districts = districts
 		},
+		initializeAos: (state) => {
+			state.aos = aosData.features as IAo[]
+		},
+		initializeSchools: (state) => {
+			state.schools = schoolsData.features as ISchool[]
+		},
 	},
 })
 
-export const { initializeDistricts } = slice.actions
+export const { initializeAos, initializeDistricts, initializeSchools } = slice.actions
 export const districtsReducer = slice.reducer
 
 // Types
 interface IState {
+	aos: IAo[]
 	districts: IDistrict[]
+	schools: ISchool[]
+}
+
+interface IMultiPolygonGeometry {
+	coordinates: [number, number][][][]
+	type: 'MultiPolygon'
+}
+
+interface IPolygonGeometry {
+	coordinates: [number, number][][]
+	type: 'Polygon'
+}
+
+interface IAo {
+	geometry: IMultiPolygonGeometry | IPolygonGeometry
+	properties: {
+		NAME: string
+		OKATO: string
+		ABBREV: string
+	}
+	type: 'Feature'
 }
 
 interface IDistrict {
-	type: 'Feature'
+	geometry: IMultiPolygonGeometry | IPolygonGeometry
 	properties: {
 		ABBREV_AO: string
 		NAME: string
@@ -46,10 +75,16 @@ interface IDistrict {
 		overPopulation: number
 		TYPE_MO: string
 	}
+	type: 'Feature'
+}
+
+interface ISchool {
+	properties: {}
 	geometry: {
-		coordinates: [number, number][][]
-		type: 'Polygon'
+		type: 'Point'
+		coordinates: [number, number]
 	}
+	type: 'Feature'
 }
 
 // const district = {
@@ -70,6 +105,32 @@ interface IDistrict {
 // 				[37.4461, 55.79449],
 // 				[37.44618, 55.79531],
 // 				[37.44656, 55.79806],
+// 			],
+// 		],
+// 	},
+// }
+
+// const ao = {
+// 	type: 'Feature',
+// 	properties: { NAME: 'Троицкий', OKATO: '45298000', ABBREV: 'Троицкий' },
+// 	geometry: {
+// 		type: 'MultiPolygon',
+// 		coordinates: [
+// 			[
+// 				[
+// 					[36.8031, 55.44083],
+// 					[36.80319, 55.4416],
+// 					[36.81136, 55.4363],
+// 					[36.8031, 55.44083],
+// 				],
+// 			],
+// 			[
+// 				[
+// 					[36.90075, 55.31486],
+// 					[36.90325, 55.31611],
+// 					[36.90128, 55.31396],
+// 					[36.90075, 55.31486],
+// 				],
 // 			],
 // 		],
 // 	},
