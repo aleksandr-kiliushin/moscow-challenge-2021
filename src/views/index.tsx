@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { Layer } from 'leaflet'
 
 // Models
 import { initializeAos, initializeDistricts, initializeSchools } from '#models/districts'
@@ -15,7 +16,6 @@ import s from './index.module.css'
 
 // Types
 import { Feature, Geometry } from 'geojson'
-import { Icon, Layer } from 'leaflet'
 import { Legend } from './Legend'
 
 export const App = () => {
@@ -53,10 +53,22 @@ export const App = () => {
 		weight: 1,
 	}
 
-	// const myIcon = new Icon({
-	// 	iconUrl: require('../../assets/school-building.svg'),
+	// const schoolIcon = new Icon({
+	// 	iconUrl: require('../assets/school-building.svg'),
+	// 	// iconUrl: require('../assets/school-building.jpeg'),
 	// 	iconSize: [64, 64],
 	// 	iconAnchor: [32, 64],
+	// })
+	// const schoolIcon = new Icon({
+	// 	iconUrl: require('../img/marker-pin-person.svg'),
+	// 	iconRetinaUrl: require('../img/marker-pin-person.svg'),
+	// 	iconAnchor: undefined,
+	// 	popupAnchor: undefined,
+	// 	shadowUrl: undefined,
+	// 	shadowSize: undefined,
+	// 	shadowAnchor: undefined,
+	// 	iconSize: new Point(60, 75),
+	// 	className: 'leaflet-div-icon',
 	// })
 
 	return (
