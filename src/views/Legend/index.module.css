@@ -1,0 +1,12 @@
+.Legend {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	height: 100%;
+	width: 100%;
+}
+
+.LegendItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
