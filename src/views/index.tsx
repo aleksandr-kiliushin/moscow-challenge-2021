@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet'
+
+// Models
+import { initializeDistricts } from '#models/finance'
 
 // Components
 import { DataPane } from './DataPane'
@@ -7,22 +10,23 @@ import { DataPane } from './DataPane'
 // Styles
 import s from './index.module.css'
 
-// Data
-import districts from '../data/mo.json'
+// Utils
+import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
 // Types
 import { Feature, Geometry } from 'geojson'
 import { Layer } from 'leaflet'
 import { Legend } from './Legend'
 
-districts.features.forEach((feature) => {
-	const overPopulation = Number((Math.random() * 300).toFixed(0))
-
-	//@ts-ignore
-	feature.properties.overPopulation = overPopulation
-})
-
 export const App = () => {
+	const dispatch = useAppDispatch()
+
+	const districts = useAppSelector((state) => state.districts.districts)
+
+	useEffect(() => {
+		dispatch(initializeDistricts())
+	}, [])
+
 	const onEachDistrict = (district: Feature<Geometry, any>, layer: Layer) => {
 		layer.bindPopup(
 			`${district.properties.NAME}, загруженность: ${district.properties.overPopulation}%`,
@@ -49,7 +53,7 @@ export const App = () => {
 					/>
 					<GeoJSON
 						// @ts-ignore
-						data={districts.features}
+						data={districts}
 						onEachFeature={onEachDistrict}
 						style={districtCommonStyle}
 					/>

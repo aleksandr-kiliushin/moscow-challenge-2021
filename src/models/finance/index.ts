@@ -1,146 +1,76 @@
-export const x = 42
+import { createSlice } from '@reduxjs/toolkit'
 
-// import { createSlice } from '@reduxjs/toolkit'
+// Data
+import geoData from '../../data/mo.json'
 
-// // Types
-// import { PayloadAction } from '@reduxjs/toolkit'
-// import { AppThunk } from '#models/store'
-// import { ILoadingStatus } from '#interfaces/common'
-// import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from '#interfaces/finance'
+// Types
+import { PayloadAction } from '@reduxjs/toolkit'
 
-// // Utils
-// import { Http } from '#utils/Http'
+const initialState: IState = {
+	districts: [],
+}
 
-// const initialState: IState = {
-// 	categories: {
-// 		items: [],
-// 		status: 'idle',
+const slice = createSlice({
+	name: 'districts',
+	initialState,
+	reducers: {
+		initializeDistricts: (state) => {
+			const districts = geoData.features as IDistrict[]
+
+			districts.forEach((district) => {
+				district.properties.overPopulation = Number((Math.random() * 300).toFixed(0))
+			})
+
+			state.districts = districts
+		},
+	},
+})
+
+export const { initializeDistricts } = slice.actions
+export const districtsReducer = slice.reducer
+
+// Types
+interface IState {
+	districts: IDistrict[]
+}
+
+interface IDistrict {
+	type: 'Feature'
+	properties: {
+		ABBREV_AO: string
+		NAME: string
+		NAME_AO: string
+		OKATO: string
+		OKATO_AO: string
+		OKTMO: string
+		overPopulation: number
+		TYPE_MO: string
+	}
+	geometry: {
+		coordinates: [number, number][][]
+		type: 'Polygon'
+	}
+}
+
+// const district = {
+// 	type: 'Feature',
+// 	properties: {
+// 		NAME: 'Щукино',
+// 		OKATO: '45283587',
+// 		OKTMO: '45372000',
+// 		NAME_AO: 'Северо-Западный',
+// 		OKATO_AO: '45283000',
+// 		ABBREV_AO: 'СЗАО',
+// 		TYPE_MO: 'Муниципальный округ',
 // 	},
-// 	categoryTypes: {
-// 		items: [],
-// 		status: 'idle',
+// 	geometry: {
+// 		type: 'Polygon',
+// 		coordinates: [
+// 			[
+// 				[37.4461, 55.79449],
+// 				[37.44618, 55.79531],
+// 				[37.44656, 55.79806],
+// 			],
+// 		],
 // 	},
-// 	records: {
-// 		notTrashed: {
-// 			items: [],
-// 			status: 'idle',
-// 		},
-// 		trashed: {
-// 			items: [],
-// 			status: 'idle',
-// 		},
-// 	},
-// }
-
-// const slice = createSlice({
-// 	name: 'finance',
-// 	initialState,
-// 	reducers: {
-// 		setCategories: (state, action: PayloadAction<IFinanceCategory[]>) => {
-// 			state.categories = {
-// 				items: action.payload,
-// 				status: 'success',
-// 			}
-// 		},
-// 		setNotTrashedRecords: (state, action: PayloadAction<IFinanceRecord[]>) => {
-// 			state.records.notTrashed = {
-// 				items: action.payload,
-// 				status: 'success',
-// 			}
-// 		},
-// 		setTrashedRecords: (state, action: PayloadAction<IFinanceRecord[]>) => {
-// 			state.records.trashed = {
-// 				items: action.payload,
-// 				status: 'success',
-// 			}
-// 		},
-// 		setCategoryTypes: (state, action: PayloadAction<IFinanceCategoryType[]>) => {
-// 			state.categoryTypes = {
-// 				items: action.payload,
-// 				status: 'success',
-// 			}
-// 		},
-// 		updateCategory: (state, action: PayloadAction<IFinanceCategory>) => {
-// 			const categoryIndex = state.categories.items.findIndex(
-// 				(category) => category.id === action.payload.id,
-// 			)
-
-// 			state.categories.items[categoryIndex] = action.payload
-// 		},
-// 	},
-// })
-
-// export const {
-// 	setCategories,
-// 	setCategoryTypes,
-// 	setNotTrashedRecords,
-// 	setTrashedRecords,
-// 	updateCategory,
-// } = slice.actions
-// export const financeReducer = slice.reducer
-
-// // Thunks
-// export const getCategories = (): AppThunk => async (dispatch, getState) => {
-// 	if (getState().finance.categories.status !== 'idle') return
-// 	const categories = await Http.get({ url: 'api/finance-category' })
-// 	dispatch(setCategories(categories))
-// }
-// export const getCategoryTypes = (): AppThunk => async (dispatch, getState) => {
-// 	if (getState().finance.categoryTypes.status !== 'idle') return
-// 	const categoryTypes = await Http.get({ url: 'api/finance-category-type' })
-// 	dispatch(setCategoryTypes(categoryTypes))
-// }
-// export const getRecords = (): AppThunk => async (dispatch, getState) => {
-// 	if (getState().finance.records.notTrashed.status === 'idle') {
-// 		const records = await Http.get({ url: 'api/finance-record?isTrashed=false' })
-// 		dispatch(setNotTrashedRecords(records))
-// 	}
-
-// 	if (getState().finance.records.trashed.status === 'idle') {
-// 		const records = await Http.get({ url: 'api/finance-record?isTrashed=true' })
-// 		dispatch(setTrashedRecords(records))
-// 	}
-// }
-// export const updateCategoryTc =
-// 	({
-// 		categoryId,
-// 		name,
-// 		typeId,
-// 	}: {
-// 		categoryId: IFinanceCategory['id']
-// 		name: IFinanceCategory['name']
-// 		typeId: IFinanceCategoryType['id']
-// 	}): AppThunk =>
-// 	async (dispatch) => {
-// 		const category = await Http.patch({
-// 			payload: {
-// 				name,
-// 				typeId,
-// 			},
-// 			url: 'api/finance-category/' + categoryId,
-// 		})
-
-// 		dispatch(updateCategory(category))
-// 	}
-
-// // Types
-// interface IState {
-// 	categories: {
-// 		items: IFinanceCategory[]
-// 		status: ILoadingStatus
-// 	}
-// 	categoryTypes: {
-// 		items: IFinanceCategoryType[]
-// 		status: ILoadingStatus
-// 	}
-// 	records: {
-// 		notTrashed: {
-// 			items: IFinanceRecord[]
-// 			status: ILoadingStatus
-// 		}
-// 		trashed: {
-// 			items: IFinanceRecord[]
-// 			status: ILoadingStatus
-// 		}
-// 	}
 // }
