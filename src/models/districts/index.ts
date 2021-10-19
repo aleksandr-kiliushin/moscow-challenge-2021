@@ -6,9 +6,18 @@ import geoData from '../../data/mo.json'
 import schoolsData from '../../data/schools.json'
 
 const initialState: IState = {
-	aos: [],
-	districts: [],
-	schools: [],
+	aos: {
+		features: [],
+		type: 'FeatureCollection',
+	},
+	districts: {
+		features: [],
+		type: 'FeatureCollection',
+	},
+	schools: {
+		features: [],
+		type: 'FeatureCollection',
+	},
 }
 
 const slice = createSlice({
@@ -16,19 +25,16 @@ const slice = createSlice({
 	initialState,
 	reducers: {
 		initializeDistricts: (state) => {
-			const districts = geoData.features as IDistrict[]
-
-			districts.forEach((district) => {
-				district.properties.overPopulation = Number((Math.random() * 300).toFixed(0))
-			})
-
-			state.districts = districts
+			// @ts-ignore
+			state.districts = geoData
 		},
 		initializeAos: (state) => {
-			state.aos = aosData.features as IAo[]
+			// @ts-ignore
+			state.aos = aosData
 		},
 		initializeSchools: (state) => {
-			state.schools = schoolsData.features as ISchool[]
+			// @ts-ignore
+			state.schools = schoolsData
 		},
 	},
 })
@@ -38,9 +44,14 @@ export const districtsReducer = slice.reducer
 
 // Types
 interface IState {
-	aos: IAo[]
-	districts: IDistrict[]
-	schools: ISchool[]
+	aos: IGeoData<IAo>
+	districts: IGeoData<IDistrict>
+	schools: IGeoData<ISchool>
+}
+
+interface IGeoData<F> {
+	features: F[]
+	type: 'FeatureCollection'
 }
 
 interface IMultiPolygonGeometry {
@@ -72,7 +83,6 @@ interface IDistrict {
 		OKATO: string
 		OKATO_AO: string
 		OKTMO: string
-		overPopulation: number
 		TYPE_MO: string
 	}
 	type: 'Feature'
