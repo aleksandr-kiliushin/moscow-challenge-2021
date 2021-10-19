@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import Leaflet from 'leaflet'
+import React from 'react'
+import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet'
 
 // Components
 import { DataPane } from './DataPane'
@@ -8,40 +8,55 @@ import { DataPane } from './DataPane'
 import s from './index.module.css'
 
 // Data
-import ao from './data/mo.json'
+import districts from '../data/mo.json'
+
+// Types
+import { Feature, Geometry } from 'geojson'
+import { Layer } from 'leaflet'
+import { Legend } from './Legend'
+
+districts.features.forEach((feature) => {
+	const overPopulation = Number((Math.random() * 300).toFixed(0))
+
+	//@ts-ignore
+	feature.properties.overPopulation = overPopulation
+})
 
 export const App = () => {
-	/** Initialize app. */
-	useEffect(() => {
-		const myMap = Leaflet.map('mapid').setView([55.6, 37.4], 10)
+	const onEachDistrict = (district: Feature<Geometry, any>, layer: Layer) => {
+		layer.bindPopup(
+			`${district.properties.NAME}, загруженность: ${district.properties.overPopulation}%`,
+			{ maxWidth: 450 },
+		)
 
-		Leaflet.tileLayer(
-			'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-			{
-				attribution:
-					'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-				maxZoom: 18,
-				id: 'mapbox/streets-v11',
-				tileSize: 512,
-				zoomOffset: -1,
-				accessToken: process.env.MAP_BOX_ACCESS_TOKEN,
-			},
-		).addTo(myMap)
+		// @ts-ignore
+		layer.options.fillOpacity = Math.random()
+	}
 
-		ao.features.forEach((feature) => {
-			Leaflet.polygon(
-				feature.geometry.coordinates[0].map(([x, y]) => [y, x]),
-				// feature.geometry.coordinates[0].map(([x, y]) => [y, x]),
-				// {
-				// 	color: feature.properties.fill,
-				// },
-			).addTo(myMap)
-		})
-	}, [])
+	const districtCommonStyle = {
+		color: 'black',
+		fillColor: 'darkred',
+		weight: 1,
+	}
 
 	return (
 		<div className={s.Layout}>
-			<div id="mapid">map</div>
+			<div className={s.MapAndLegendContrainer}>
+				<MapContainer center={[55.6, 37.4]} zoom={10}>
+					<TileLayer
+						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					<GeoJSON
+						// @ts-ignore
+						data={districts.features}
+						onEachFeature={onEachDistrict}
+						style={districtCommonStyle}
+					/>
+				</MapContainer>
+
+				<Legend />
+			</div>
 
 			<DataPane />
 		</div>
