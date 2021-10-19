@@ -17,15 +17,15 @@ import { DataGenerator } from '../data/DataGenerator'
 import s from './index.module.css'
 
 // Types
-// import { Feature, Geometry } from 'geojson'
+import { Feature, Geometry } from 'geojson'
 
 export const App = () => {
 	const dispatch = useAppDispatch()
 
 	const map = useRef<Map | null>(null)
 
-	// const aos = useAppSelector((state) => state.districts.aos)
-	// const districts = useAppSelector((state) => state.districts.districts)
+	const aos = useAppSelector((state) => state.districts.aos)
+	const districts = useAppSelector((state) => state.districts.districts)
 	const schools = useAppSelector((state) => state.districts.schools)
 
 	useEffect(() => {
@@ -40,46 +40,52 @@ export const App = () => {
 		}).addTo(map.current)
 	}, [])
 
-	// useEffect(() => {
-	// 	Leaflet.geoJSON(aos, {
-	// 		style: {
-	// 			color: 'black',
-	// 			fillOpacity: 0,
-	// 			weight: 5,
-	// 		},
-	// 	}).addTo(map.current as Map)
-	// }, [aos])
-
-	// useEffect(() => {
-
-	// // const onEachDistrict = (district: Feature<Geometry, any>, layer: Layer) => {
-	// // 	layer.bindPopup(
-	// // 		`${district.properties.NAME}, загруженность: ${district.properties.overPopulation}%`,
-	// // 		{ maxWidth: 450 },
-	// // 	)
-	// // }
-
-	// 	Leaflet.geoJSON(districts, {
-	// 		style: {
-	// 			color: 'black',
-	// 			fillColor: 'black',
-	// 			fillOpacity: 0.1,
-	// 			weight: 2,
-	// 		},
-	// 	}).addTo(map.current as Map)
-	// }, [districts])
+	useEffect(() => {
+		Leaflet.geoJSON(aos, {
+			style: {
+				color: 'black',
+				fillOpacity: 0,
+				weight: 5,
+			},
+		}).addTo(map.current as Map)
+	}, [aos])
 
 	useEffect(() => {
-		Leaflet.geoJSON(schools).addTo(map.current as Map)
+		const onEachFeature = (district: Feature<Geometry, any>, layer: Layer) => {
+			layer.bindPopup(district.properties.NAME, {
+				maxWidth: 450,
+			})
+		}
+
+		Leaflet.geoJSON(districts, {
+			onEachFeature,
+			style: {
+				color: 'black',
+				fillColor: 'black',
+				fillOpacity: 0.1,
+				weight: 2,
+			},
+		}).addTo(map.current as Map)
+	}, [districts])
+
+	useEffect(() => {
+		const onEachFeature = (school: Feature<Geometry, any>, layer: Layer) => {
+			layer.bindPopup('Школа №42', {
+				maxWidth: 450,
+			})
+		}
+
+		Leaflet.geoJSON(schools, {
+			onEachFeature,
+		}).addTo(map.current as Map)
 	}, [schools])
 
 	useEffect(() => {
-		// [lat, lng, intensity]
 		const points = DataGenerator.overPopulationHeatData()
 
-		console.log(points)
-		// @ts-ignore
-		Leaflet.heatLayer(points).addTo(map.current as Map)
+		Leaflet.heatLayer(points, {
+			minOpacity: 0.3,
+		}).addTo(map.current as Map)
 	}, [])
 
 	return (
