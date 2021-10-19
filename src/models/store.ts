@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 // Reducers
 import { commonReducer } from './common'
-import { districtsReducer } from './finance'
+import { districtsReducer } from './districts'
 
 // Types
 import { Action, ThunkAction } from '@reduxjs/toolkit'

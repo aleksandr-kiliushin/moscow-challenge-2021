@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet'
 
 // Models
-import { initializeDistricts } from '#models/finance'
+import { initializeDistricts } from '#models/districts'
 
 // Components
 import { DataPane } from './DataPane'
