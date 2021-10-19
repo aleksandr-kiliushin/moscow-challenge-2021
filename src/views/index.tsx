@@ -38,7 +38,7 @@ export const App = () => {
 		)
 
 		// @ts-ignore
-		layer.options.fillOpacity = Math.random()
+		// layer.options.fillOpacity = Math.random()
 	}
 
 	const aoCommonStyle = {
@@ -49,8 +49,9 @@ export const App = () => {
 
 	const districtCommonStyle = {
 		color: 'black',
-		fillColor: 'darkred',
-		weight: 1,
+		fillColor: 'black',
+		fillOpacity: 0.1,
+		weight: 2,
 	}
 
 	// const schoolIcon = new Icon({
