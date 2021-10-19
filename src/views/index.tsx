@@ -11,6 +11,7 @@ import { Legend } from './Legend'
 
 // Utils
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
+import { DataGenerator } from '../data/DataGenerator'
 
 // Styles
 import s from './index.module.css'
@@ -74,13 +75,9 @@ export const App = () => {
 
 	useEffect(() => {
 		// [lat, lng, intensity]
-		const points = [
-			[55.64756765150652, 37.63298034667969, 0.9],
-			[55.754940702479175, 37.75657653808594, 0.9],
-			[55.72517666621405, 37.434539794921875, 0.9],
-			[55.518524650217024, 37.32330322265625, 0.9],
-			[55.89071598742222, 37.56122589111328, 0.9],
-		]
+		const points = DataGenerator.overPopulationHeatData()
+
+		console.log(points)
 		// @ts-ignore
 		Leaflet.heatLayer(points).addTo(map.current as Map)
 	}, [])
