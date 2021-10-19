@@ -1,52 +1,56 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 // Data
-import aosData from '../../data/ao.json'
-import geoData from '../../data/mo.json'
+import administrativeDistrictsData from '../../data/ao.json'
+import municipalDistrictsData from '../../data/mo.json'
 import schoolsData from '../../data/schools.json'
 
 const initialState: IState = {
-	aos: {
+	administrativeDistrictsData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
-	districts: {
+	municipalDistrictsData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
-	schools: {
+	schoolsData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
 }
 
 const slice = createSlice({
-	name: 'districts',
+	name: 'map',
 	initialState,
 	reducers: {
-		initializeDistricts: (state) => {
+		initializeAdministrativeDistrictsData: (state) => {
 			// @ts-ignore
-			state.districts = geoData
+			state.administrativeDistrictsData = administrativeDistrictsData
 		},
-		initializeAos: (state) => {
+		initializeMunicipalDistrictsData: (state) => {
 			// @ts-ignore
-			state.aos = aosData
+			state.municipalDistrictsData = municipalDistrictsData
 		},
-		initializeSchools: (state) => {
+		initializeSchoolsData: (state) => {
 			// @ts-ignore
-			state.schools = schoolsData
+			state.schoolsData = schoolsData
 		},
 	},
 })
 
-export const { initializeAos, initializeDistricts, initializeSchools } = slice.actions
-export const districtsReducer = slice.reducer
+export const {
+	initializeAdministrativeDistrictsData,
+	initializeMunicipalDistrictsData,
+	initializeSchoolsData,
+} = slice.actions
+export const mapReducer = slice.reducer
 
 // Types
 interface IState {
-	aos: IGeoData<IAo>
-	districts: IGeoData<IDistrict>
-	schools: IGeoData<ISchool>
+	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
+	municipalDistrictsData: IGeoData<IMunicipalDistrict>
+	schoolsData: IGeoData<ISchool>
 }
 
 interface IGeoData<F> {
@@ -64,7 +68,7 @@ interface IPolygonGeometry {
 	type: 'Polygon'
 }
 
-interface IAo {
+interface IAdministrativeDistrict {
 	geometry: IMultiPolygonGeometry | IPolygonGeometry
 	properties: {
 		NAME: string
@@ -74,7 +78,7 @@ interface IAo {
 	type: 'Feature'
 }
 
-interface IDistrict {
+interface IMunicipalDistrict {
 	geometry: IMultiPolygonGeometry | IPolygonGeometry
 	properties: {
 		ABBREV_AO: string
@@ -97,7 +101,7 @@ interface ISchool {
 	type: 'Feature'
 }
 
-// const district = {
+// const municipalDistrict = {
 // 	type: 'Feature',
 // 	properties: {
 // 		NAME: 'Щукино',
@@ -120,7 +124,7 @@ interface ISchool {
 // 	},
 // }
 
-// const ao = {
+// const administrativeDistrict = {
 // 	type: 'Feature',
 // 	properties: { NAME: 'Троицкий', OKATO: '45298000', ABBREV: 'Троицкий' },
 // 	geometry: {

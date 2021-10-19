@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 // Reducers
 import { commonReducer } from './common'
-import { districtsReducer } from './districts'
+import { mapReducer } from './map'
 
 // Types
 import { Action, ThunkAction } from '@reduxjs/toolkit'
@@ -10,7 +10,7 @@ import { Action, ThunkAction } from '@reduxjs/toolkit'
 export const store = configureStore({
 	reducer: {
 		common: commonReducer,
-		districts: districtsReducer,
+		map: mapReducer,
 	},
 })
 

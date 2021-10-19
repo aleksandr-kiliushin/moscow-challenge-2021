@@ -3,7 +3,11 @@ import Leaflet, { Layer, Map } from 'leaflet'
 import 'leaflet.heat'
 
 // Models
-import { initializeAos, initializeDistricts, initializeSchools } from '#models/districts'
+import {
+	initializeAdministrativeDistrictsData,
+	initializeMunicipalDistrictsData,
+	initializeSchoolsData,
+} from '#models/map'
 
 // Components
 import { DataPane } from './DataPane'
@@ -24,14 +28,16 @@ export const App = () => {
 
 	const map = useRef<Map | null>(null)
 
-	const aos = useAppSelector((state) => state.districts.aos)
-	const districts = useAppSelector((state) => state.districts.districts)
-	const schools = useAppSelector((state) => state.districts.schools)
+	const administrativeDistrictsData = useAppSelector(
+		(state) => state.map.administrativeDistrictsData,
+	)
+	const municipalDistrictsData = useAppSelector((state) => state.map.municipalDistrictsData)
+	const schoolsData = useAppSelector((state) => state.map.schoolsData)
 
 	useEffect(() => {
-		dispatch(initializeAos())
-		dispatch(initializeDistricts())
-		dispatch(initializeSchools())
+		dispatch(initializeAdministrativeDistrictsData())
+		dispatch(initializeMunicipalDistrictsData())
+		dispatch(initializeSchoolsData())
 
 		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
 
@@ -41,14 +47,14 @@ export const App = () => {
 	}, [])
 
 	useEffect(() => {
-		Leaflet.geoJSON(aos, {
+		Leaflet.geoJSON(administrativeDistrictsData, {
 			style: {
 				color: 'black',
 				fillOpacity: 0,
 				weight: 5,
 			},
 		}).addTo(map.current as Map)
-	}, [aos])
+	}, [administrativeDistrictsData])
 
 	useEffect(() => {
 		const onEachFeature = (district: Feature<Geometry, any>, layer: Layer) => {
@@ -57,7 +63,7 @@ export const App = () => {
 			})
 		}
 
-		Leaflet.geoJSON(districts, {
+		Leaflet.geoJSON(municipalDistrictsData, {
 			onEachFeature,
 			style: {
 				color: 'black',
@@ -66,7 +72,7 @@ export const App = () => {
 				weight: 2,
 			},
 		}).addTo(map.current as Map)
-	}, [districts])
+	}, [municipalDistrictsData])
 
 	useEffect(() => {
 		const onEachFeature = (school: Feature<Geometry, any>, layer: Layer) => {
@@ -75,10 +81,10 @@ export const App = () => {
 			})
 		}
 
-		Leaflet.geoJSON(schools, {
+		Leaflet.geoJSON(schoolsData, {
 			onEachFeature,
 		}).addTo(map.current as Map)
-	}, [schools])
+	}, [schoolsData])
 
 	useEffect(() => {
 		const points = DataGenerator.overPopulationHeatData()
