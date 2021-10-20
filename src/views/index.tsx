@@ -22,6 +22,7 @@ import s from './index.module.css'
 
 // Types
 import { Feature, Geometry } from 'geojson'
+import { ISchool } from '#models/map'
 
 export const App = () => {
 	const dispatch = useAppDispatch()
@@ -50,7 +51,7 @@ export const App = () => {
 		Leaflet.geoJSON(administrativeDistrictsData, {
 			style: {
 				color: 'black',
-				fillOpacity: 0,
+				fill: false,
 				weight: 5,
 			},
 		}).addTo(map.current as Map)
@@ -75,10 +76,19 @@ export const App = () => {
 	}, [municipalDistrictsData])
 
 	useEffect(() => {
-		const onEachFeature = (school: Feature<Geometry, any>, layer: Layer) => {
-			layer.bindPopup('Школа №42', {
+		const onEachFeature = (school: Feature<Geometry, ISchool['properties']>, layer: Layer) => {
+			layer.bindPopup(school.properties.schoolName, {
 				maxWidth: 450,
 			})
+
+			// @ts-ignore
+			Leaflet.circle([...school.geometry.coordinates].reverse(), {
+				color: 'brown',
+				fillColor: 'brown',
+				fillOpacity: 0.7,
+				radius: school.properties.optimalStudentsAmount * 2,
+				// @ts-ignore
+			}).addTo(map.current)
 		}
 
 		Leaflet.geoJSON(schoolsData, {

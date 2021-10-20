@@ -4,9 +4,9 @@
 		{
 			"type": "Feature",
 			"properties": {
-				"schoolName": "Лицей №1234",
-				"studentsAmount": 900,
-				"overload": 129
+				"optimalStudentsAmount": 980,
+				"schoolName": "Школа №50",
+				"studentsAmount": 1000
 			},
 			"geometry": {
 				"type": "Point",
@@ -16,9 +16,9 @@
 		{
 			"type": "Feature",
 			"properties": {
-				"schoolName": "Школа №50",
-				"studentsAmount": 400,
-				"overload": 103
+				"optimalStudentsAmount": 300,
+				"schoolName": "Школа №1536",
+				"studentsAmount": 400
 			},
 			"geometry": {
 				"type": "Point",
@@ -28,9 +28,9 @@
 		{
 			"type": "Feature",
 			"properties": {
-				"schoolName": "Школа №50",
-				"studentsAmount": 400,
-				"overload": 103
+				"optimalStudentsAmount": 550,
+				"schoolName": "Лицей №866",
+				"studentsAmount": 800
 			},
 			"geometry": {
 				"type": "Point",

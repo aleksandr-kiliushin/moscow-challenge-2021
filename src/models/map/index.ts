@@ -92,8 +92,12 @@ interface IMunicipalDistrict {
 	type: 'Feature'
 }
 
-interface ISchool {
-	properties: {}
+export interface ISchool {
+	properties: {
+		optimalStudentsAmount: number
+		schoolName: string
+		studentsAmount: number
+	}
 	geometry: {
 		type: 'Point'
 		coordinates: [number, number]
