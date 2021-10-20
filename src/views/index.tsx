@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import Leaflet, { Layer, Map } from 'leaflet'
+import Leaflet, { LatLngExpression, Layer, Map } from 'leaflet'
 import 'leaflet.heat'
 
 // Models
@@ -19,6 +19,9 @@ import { DataGenerator } from '../data/DataGenerator'
 
 // Styles
 import s from './index.module.css'
+
+// Assets
+import existingSchoolSvg from '../assets/existing-school.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
@@ -87,12 +90,22 @@ export const App = () => {
 				fillColor: 'brown',
 				fillOpacity: 0.7,
 				radius: school.properties.optimalStudentsAmount * 2,
-				// @ts-ignore
-			}).addTo(map.current)
+			}).addTo(map.current as Map)
+		}
+
+		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
+			const icon = Leaflet.icon({
+				iconSize: [27, 27],
+				iconAnchor: [13, 27],
+				popupAnchor: [1, -24],
+				iconUrl: existingSchoolSvg,
+			})
+			return Leaflet.marker(latlng, { icon })
 		}
 
 		Leaflet.geoJSON(schoolsData, {
 			onEachFeature,
+			pointToLayer,
 		}).addTo(map.current as Map)
 	}, [schoolsData])
 
@@ -102,6 +115,20 @@ export const App = () => {
 		Leaflet.heatLayer(points, {
 			minOpacity: 0.3,
 		}).addTo(map.current as Map)
+	}, [])
+
+	useEffect(() => {
+		const icon = Leaflet.icon({
+			iconUrl:
+				'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fmoscow&psig=AOvVaw2b3gLuNeytxZYB5qc3QUga&ust=1634808625468000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLjY-OzW2PMCFQAAAAAdAAAAABAI',
+			iconSize: [38, 95], // size of the icon
+			shadowSize: [50, 64], // size of the shadow
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			shadowAnchor: [4, 62], // the same for the shadow
+			popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+		})
+
+		Leaflet.marker([51.5, -0.09], { icon }).addTo(map.current as Map)
 	}, [])
 
 	return (
