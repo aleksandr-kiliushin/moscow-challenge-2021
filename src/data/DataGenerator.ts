@@ -7,7 +7,7 @@ export class DataGenerator {
 	static overPopulationHeatData() {
 		const data: [number, number, number][] = []
 
-		for (let i = 0; i < 10000; i++) {
+		for (let i = 0; i < 5000; i++) {
 			data.push([
 				this.minLat + (this.maxLat - this.minLat) * Math.random(),
 				this.minLon + (this.maxLon - this.minLon) * Math.random(),

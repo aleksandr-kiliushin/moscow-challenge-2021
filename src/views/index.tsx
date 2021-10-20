@@ -21,7 +21,7 @@ import { DataGenerator } from '../data/DataGenerator'
 import s from './index.module.css'
 
 // Assets
-import existingSchoolSvg from '../assets/existing-school.svg'
+import existingSchoolSvg from '../assets/existing-school-3.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
@@ -86,8 +86,8 @@ export const App = () => {
 
 			// @ts-ignore
 			Leaflet.circle([...school.geometry.coordinates].reverse(), {
-				color: 'brown',
-				fillColor: 'brown',
+				color: 'white',
+				fillColor: 'white',
 				fillOpacity: 0.7,
 				radius: school.properties.optimalStudentsAmount * 2,
 			}).addTo(map.current as Map)
