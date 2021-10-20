@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 // Data
-import administrativeDistrictsData from '../../data/ao.json'
-import municipalDistrictsData from '../../data/mo.json'
-import schoolsData from '../../data/schools.json'
+import administrativeDistrictsData from '../../data/administrative-districts.json'
+import municipalDistrictsData from '../../data/municipal-districts.json'
+import schoolsData from '../../data/existing-schools.json'
 
 const initialState: IState = {
 	administrativeDistrictsData: {

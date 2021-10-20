@@ -3,7 +3,11 @@
 	"features": [
 		{
 			"type": "Feature",
-			"properties": {},
+			"properties": {
+				"schoolName": "Лицей №1234",
+				"studentsAmount": 900,
+				"overload": 129
+			},
 			"geometry": {
 				"type": "Point",
 				"coordinates": [37.63298034667969, 55.64756765150652]
@@ -11,7 +15,11 @@
 		},
 		{
 			"type": "Feature",
-			"properties": {},
+			"properties": {
+				"schoolName": "Школа №50",
+				"studentsAmount": 400,
+				"overload": 103
+			},
 			"geometry": {
 				"type": "Point",
 				"coordinates": [37.75657653808594, 55.754940702479175]
@@ -19,7 +27,11 @@
 		},
 		{
 			"type": "Feature",
-			"properties": {},
+			"properties": {
+				"schoolName": "Школа №50",
+				"studentsAmount": 400,
+				"overload": 103
+			},
 			"geometry": {
 				"type": "Point",
 				"coordinates": [37.434539794921875, 55.72517666621405]
