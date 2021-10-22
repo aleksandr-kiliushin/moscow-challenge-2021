@@ -7,5 +7,7 @@ import requests
 
 
 class HomeTestCase(BaseTestCase):
-    pass
-    
+    def test_index_success(self):
+        with self.app.test_client() as test_client:
+            response = test_client.get('/')
+            assert response.status_code == 200
