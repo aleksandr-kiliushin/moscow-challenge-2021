@@ -1,4 +1,4 @@
-# Flask-Elasticsearch-Template
+# хакатона ЛЦТ moscow-challenge-2021 (команда: R2D2)
 
 Пример реализации задачи 6 хакатона ЛЦТ moscow-challenge-2021 (команда: R2D2)
 
