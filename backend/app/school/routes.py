@@ -5,7 +5,7 @@ from sqlalchemy.orm.scoping import scoped_session
 from flask_classy import FlaskView, route
 
 
-class Home(FlaskView):
+class School(FlaskView):
     session: scoped_session = db.session
 
     def get(self):

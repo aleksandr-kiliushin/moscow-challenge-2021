@@ -12,8 +12,8 @@ celery = Celery(__name__, backend=Config.RESULT_BACKEND, broker=Config.BROKER_UR
 
 
 def register_blueprints(app):
-    from app.home import bp as home_bp
-    app.register_blueprint(home_bp)
+    from app.school import bp as school_bp
+    app.register_blueprint(school_bp)
 
 
 def create_app(config_class=Config):
