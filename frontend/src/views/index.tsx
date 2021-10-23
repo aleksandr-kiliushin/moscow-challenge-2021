@@ -9,10 +9,6 @@ import {
 	initializeSchoolsData,
 } from '#models/map'
 
-// Components
-import { DataPane } from './DataPane'
-import { Legend } from './Legend'
-
 // Utils
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
 import { DataGenerator } from '../data/DataGenerator'
@@ -131,14 +127,5 @@ export const App = () => {
 		Leaflet.marker([51.5, -0.09], { icon }).addTo(map.current as Map)
 	}, [])
 
-	return (
-		<div className={s.Layout}>
-			<div className={s.MapAndLegendContrainer}>
-				<div id="mapId" />
-				<Legend />
-			</div>
-
-			<DataPane />
-		</div>
-	)
+	return <div id="mapId" className={s.Layout} />
 }
