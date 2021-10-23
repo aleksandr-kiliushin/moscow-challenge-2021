@@ -80,17 +80,17 @@ export const App = () => {
 
 	useEffect(() => {
 		const onEachFeature = (school: Feature<Geometry, ISchool['properties']>, layer: Layer) => {
-			layer.bindPopup(school.properties.schoolName, {
+			layer.bindPopup(school.properties.name, {
 				maxWidth: 450,
 			})
 
-			// @ts-ignore
-			Leaflet.circle([...school.geometry.coordinates].reverse(), {
-				color: 'white',
-				fillColor: 'white',
-				fillOpacity: 0.7,
-				radius: school.properties.optimalStudentsAmount * 2,
-			}).addTo(map.current as Map)
+			// 	// @ts-ignore
+			// 	Leaflet.circle([...school.geometry.coordinates].reverse(), {
+			// 		color: 'white',
+			// 		fillColor: 'white',
+			// 		fillOpacity: 0.7,
+			// 		radius: school.properties.optimalStudentsAmount * 2,
+			// 	}).addTo(map.current as Map)
 		}
 
 		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {

@@ -94,9 +94,7 @@ interface IMunicipalDistrict {
 
 export interface ISchool {
 	properties: {
-		optimalStudentsAmount: number
-		schoolName: string
-		studentsAmount: number
+		name: string
 	}
 	geometry: {
 		type: 'Point'
