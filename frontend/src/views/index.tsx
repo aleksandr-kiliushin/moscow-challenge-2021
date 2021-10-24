@@ -81,7 +81,7 @@ export const App = () => {
 			style: {
 				color: 'black',
 				fillColor: '#cf0000',
-				fillOpacity: 0.5,
+				fillOpacity: 0.7,
 				weight: 2,
 			},
 		}).addTo(map.current as Map)
