@@ -4,4 +4,4 @@
 
 ### Для запуска приложения выполните следующую команду:
 
-docker-compose up
+`docker-compose up`
