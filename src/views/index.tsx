@@ -114,8 +114,8 @@ export const App = () => {
 
 		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
 			const icon = Leaflet.icon({
-				iconSize: [27, 27],
-				iconAnchor: [13, 27],
+				iconSize: [40, 40],
+				iconAnchor: [20, 40],
 				popupAnchor: [1, -24],
 				iconUrl: schoolsUnderConstructionSvg,
 			})
