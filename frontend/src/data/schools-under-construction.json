@@ -1,0 +1,257 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"geometry": { "coordinates": [37.415994170827, 55.771269652536], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:07:0001002:1000",
+				"GPZUDocumentNumber": "RU77-142000-001945",
+				"ObjectName": "Многофункциональный досугово-клубный центр"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.555353844431, 55.867652818993], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:09:0002026:14073",
+				"GPZUDocumentNumber": "RU77109000-039682",
+				"ObjectName": "Школа на 550 мест (на месте сноса здания ДОУ № 519)"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.750244012003, 55.662379410038], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:04:0004025:1020",
+				"GPZUDocumentNumber": "RU77-155000-003737",
+				"ObjectName": "Негосударственное образовательное учреждение"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.387917854563, 55.642146325955], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:07:0015007:5434",
+				"GPZUDocumentNumber": "RU77-198000-023082",
+				"ObjectName": "Многофункциональный жилой комплекс \"Лучи\". 2-й этап и этап 4.1. Этап 2.1 - общеобразовательное школьное учреждение на 825 мест корпус № 11"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.473160140133, 55.651700995153], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:07:0014010:11396",
+				"GPZUDocumentNumber": "RU77-207000-021158",
+				"ObjectName": "Завершение строительства здания школы на 550 мест (реконструкция без увеличения ТЭП)"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.533006153662, 55.544812525726], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:06:0012004:27",
+				"GPZUDocumentNumber": "RU77220000-046778",
+				"ObjectName": "Учебный корпус на 300 мест к ГБОУ СОШ № 2007"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.428193905982, 55.817831481453], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:08:0015001:1778",
+				"GPZUDocumentNumber": "RU77179000-037259",
+				"ObjectName": "Общеобразовательная школа со спортивным уклоном, входящая в состав Многофункционального комплекса спортивной направленности с соответствующей инфраструктурой"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.414362610151, 55.736495537869], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:07:0004004:9166",
+				"GPZUDocumentNumber": "RU77-145000-024995",
+				"ObjectName": "Учебный корпус на 400 мест на территории школы № 64"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.154381016651, 55.966176895524], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:10:0006007:1316",
+				"GPZUDocumentNumber": "RU77-143000-017405",
+				"ObjectName": "Застройка микрорайона №17 района Крюково, IV-я очередь строительства, 5-й этап, Общеобразовательная организация на 1100 мест, поз.21"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.558724811535, 55.776809541183], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:06:0011011:1002",
+				"GPZUDocumentNumber": "RU77220000-043562",
+				"ObjectName": "Общеобразовательная школа на 625 мест, в составе 1-й очереди строительства жилого комплекса с объектами инфраструктуры"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.346538172867, 55.801402666433], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:12:0010112:4",
+				"GPZUDocumentNumber": "РФ-77-4-53-3-20-2020-1462",
+				"ObjectName": "Многофункциональная общественно-жилая застройка. 6 этап строительства. Корпус 8 - школа на 825 мест"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.471119452397, 55.868746967766], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:09:0001006:88",
+				"GPZUDocumentNumber": "RU77147000-034669",
+				"ObjectName": "Учебный корпус на 250 мест с дошкольным отделением на 300 мест на месте сноса здания ДОУ.2 этап"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.536719527304, 55.759069266693], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:01:00004049:5008",
+				"GPZUDocumentNumber": "RU77181000-043384",
+				"ObjectName": "Учебный корпус на 300 мест"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.629484218798, 55.816616073681], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "0",
+				"GPZUDocumentNumber": "0",
+				"ObjectName": "Снос и новое строительство здания ГБОУ гимназия № 1518 (школа № 271) на 550 мест,  (на месте сноса существующего здания). (2 этап строительства объекта, сетей, демонтаж сетей и здания школы на уровне котлована) по адресу: ул. Цандера, д. 3 (Останкинский, СВАО)"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.633014134231, 55.650504072164], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:05:0005003:6509",
+				"GPZUDocumentNumber": "РФ-77-4-59-3-17-2020-2791",
+				"ObjectName": "Общеобразовательная организация на 900"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.936638117654, 55.706798813763], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:16:0010105:21549",
+				"GPZUDocumentNumber": "RU77166000-032626",
+				"ObjectName": "Школа на 1150 мест, район Некрасовка, кв. 17"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.945620576912, 55.711666415578], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:16:0010105:21556",
+				"GPZUDocumentNumber": "RU77166000-046649",
+				"ObjectName": "Учебный корпус на 350 мест"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.534549552349, 55.882730147671], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:09:0002009:42",
+				"GPZUDocumentNumber": "RU77127000-037802",
+				"ObjectName": "Учебный корпус на 250 мест к ГБОУ СОШ № 771"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.943847490894, 55.699651419163], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:16:0010105:24950",
+				"GPZUDocumentNumber": "RU77166000-039056",
+				"ObjectName": "Школа на 550 мест"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.470873515226, 55.790013399963], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:08:0011001:7208",
+				"GPZUDocumentNumber": "РФ-77-4-53-3-72-2020-3499",
+				"ObjectName": "Общеобразовательная школа на 800 мест по адресу: г. Москва, СЗАО, ул. Берзарина, вл. 32, участок с кадастровым номером 77:08:0011001:7208"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.748767005223, 55.724510826429], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:04:0002006:19629",
+				"GPZUDocumentNumber": "РФ-77-4-53-3-94-2020-3379",
+				"ObjectName": "Здание общеобразовательной организации (общее образование) на 550 мест"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.512692472863, 55.763336317514], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:08:0012005:7394",
+				"GPZUDocumentNumber": "РФ-77-4-53-3-71-2021-0567",
+				"ObjectName": "Общеобразовательная организация на 500 мест в составе «Многофункциональной комплексной застройки, 3-я очередь, 4-ый этап"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.4666357047, 55.669191417332], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:07:0014005:108",
+				"GPZUDocumentNumber": "РФ-77-4-53-3-27-2020-3700",
+				"ObjectName": "Учебный корпус на 400 мест к ГБОУ школа № 1329, район Тропарево- Никулино, ул. Никулинская"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.384802944364, 55.900467582062], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:08:0001007:1888",
+				"GPZUDocumentNumber": "РФ-77-4-53-3-66-2020-3709",
+				"ObjectName": "Учебный корпус на 550 мест (в т.ч. дошкольное отделение на 150 мест) с автономным источником тепла."
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.5890143571, 55.639687908388], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "не определен",
+				"GPZUDocumentNumber": "РФ-77-4-59-3-24-2020-4470",
+				"ObjectName": "Учебный корпус на 300 мест, район Чертаново Северное, мкр. ОПЖР"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.517777464111, 55.759485290599], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "не определён",
+				"GPZUDocumentNumber": "RU77181000-033014",
+				"ObjectName": "Учебный корпус на 400 мест на месте сноса здания школы"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.341381433313, 55.648846251816], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:07:0015005:28530",
+				"GPZUDocumentNumber": "RU77-170000-024078",
+				"ObjectName": "Школа на 550 мест"
+			},
+			"type": "Feature"
+		},
+		{
+			"geometry": { "coordinates": [37.595754262203, 55.747077041055], "type": "Point" },
+			"properties": {
+				"CadastralNumber": "77:01:0001048:1005",
+				"GPZUDocumentNumber": "RU77-210000-014977",
+				"ObjectName": "Реконструкция с приспособлением и пристройкой здания Государственного бюджетного общеобразовательного учреждения г. Москвы «Гимназия № 1529 им. А.С. Грибоедова», структурного подразделения № 4 им. Н.В. Гоголя, расположенного по адресу: Староконюшенный пер., д. 20, и реставрация с приспособлением для современного использования объекта культурного наследия регионального значения «Гимназия им. И. и А. Медведниковых, 1903 г., архитектор Кузнецов И.С. Здесь в 1941 г. была сформирована 21-я дивизия народного ополчения» по адресу: Староконюшенный пер., д. 18."
+			},
+			"type": "Feature"
+		}
+	]
+}

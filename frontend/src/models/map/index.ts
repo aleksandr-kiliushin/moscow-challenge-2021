@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import administrativeDistrictsData from '../../data/administrative-districts.json'
 import cellsData from '../../data/cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
+import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
 
 const initialState: IState = {
 	administrativeDistrictsData: {
@@ -15,6 +16,10 @@ const initialState: IState = {
 		type: 'FeatureCollection',
 	},
 	municipalDistrictsData: {
+		features: [],
+		type: 'FeatureCollection',
+	},
+	schoolsUnderConstructionData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
@@ -36,6 +41,10 @@ const slice = createSlice({
 			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
 		},
+		initializeSchoolsUnderConstructionData: (state) => {
+			// @ts-ignore
+			state.schoolsUnderConstructionData = schoolsUnderConstructionData
+		},
 	},
 })
 
@@ -43,6 +52,7 @@ export const {
 	initializeAdministrativeDistrictsData,
 	initializeCellsData,
 	initializeMunicipalDistrictsData,
+	initializeSchoolsUnderConstructionData,
 } = slice.actions
 export const mapReducer = slice.reducer
 
@@ -51,6 +61,7 @@ interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
 	cellsData: IGeoData<ICell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
+	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
 }
 
 interface IGeoData<F> {
@@ -122,13 +133,15 @@ interface IMunicipalDistrict {
 	type: 'Feature'
 }
 
-// export interface ISchool {
-// 	properties: {
-// 		name: string
-// 	}
-// 	geometry: {
-// 		type: 'Point'
-// 		coordinates: [number, number]
-// 	}
-// 	type: 'Feature'
-// }
+export interface ISchoolUnderConstruction {
+	properties: {
+		CadastralNumber: string
+		GPZUDocumentNumber: string
+		ObjectName: string
+	}
+	geometry: {
+		type: 'Point'
+		coordinates: [number, number]
+	}
+	type: 'Feature'
+}

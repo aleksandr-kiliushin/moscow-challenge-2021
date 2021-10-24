@@ -6,6 +6,7 @@ import {
 	initializeAdministrativeDistrictsData,
 	initializeCellsData,
 	initializeMunicipalDistrictsData,
+	initializeSchoolsUnderConstructionData,
 } from '#models/map'
 
 // Utils
@@ -13,6 +14,9 @@ import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
 // Styles
 import s from './index.module.css'
+
+// Assets (статические файлы - SVG иконки)
+import schoolsUnderConstructionSvg from '../assets/existing-school.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
@@ -28,12 +32,16 @@ export const App = () => {
 	)
 	const cellsData = useAppSelector((state) => state.map.cellsData)
 	const municipalDistrictsData = useAppSelector((state) => state.map.municipalDistrictsData)
+	const schoolsUnderConstructionData = useAppSelector(
+		(state) => state.map.schoolsUnderConstructionData,
+	)
 
 	useEffect(() => {
 		// Инициализируем получение данных при запуске приложения.
 		dispatch(initializeAdministrativeDistrictsData())
 		dispatch(initializeCellsData())
 		dispatch(initializeMunicipalDistrictsData())
+		dispatch(initializeSchoolsUnderConstructionData())
 
 		// Фиксируем окно с картой по координатам Москвы.
 		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
@@ -86,6 +94,23 @@ export const App = () => {
 			},
 		}).addTo(map.current as Map)
 	}, [cellsData])
+
+	// Наносим на карту информацию о потребности в школах (тепловая карта).
+	useEffect(() => {
+		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
+			const icon = Leaflet.icon({
+				iconSize: [27, 27],
+				iconAnchor: [13, 27],
+				popupAnchor: [1, -24],
+				iconUrl: schoolsUnderConstructionSvg,
+			})
+			return Leaflet.marker(latlng, { icon })
+		}
+
+		Leaflet.geoJSON(schoolsUnderConstructionData, {
+			pointToLayer,
+		}).addTo(map.current as Map)
+	}, [schoolsUnderConstructionData])
 
 	return <div id="mapId" className={s.Layout} />
 }
