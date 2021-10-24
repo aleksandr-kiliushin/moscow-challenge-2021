@@ -113,19 +113,19 @@ export const App = () => {
 		}).addTo(map.current as Map)
 	}, [])
 
-	useEffect(() => {
-		const icon = Leaflet.icon({
-			iconUrl:
-				'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fmoscow&psig=AOvVaw2b3gLuNeytxZYB5qc3QUga&ust=1634808625468000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLjY-OzW2PMCFQAAAAAdAAAAABAI',
-			iconSize: [38, 95], // size of the icon
-			shadowSize: [50, 64], // size of the shadow
-			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-			shadowAnchor: [4, 62], // the same for the shadow
-			popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-		})
+	// useEffect(() => {
+	// 	const icon = Leaflet.icon({
+	// 		iconUrl:
+	// 			'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fmoscow&psig=AOvVaw2b3gLuNeytxZYB5qc3QUga&ust=1634808625468000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLjY-OzW2PMCFQAAAAAdAAAAABAI',
+	// 		iconSize: [38, 95], // size of the icon
+	// 		shadowSize: [50, 64], // size of the shadow
+	// 		iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+	// 		shadowAnchor: [4, 62], // the same for the shadow
+	// 		popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+	// 	})
 
-		Leaflet.marker([51.5, -0.09], { icon }).addTo(map.current as Map)
-	}, [])
+	// 	Leaflet.marker([51.5, -0.09], { icon }).addTo(map.current as Map)
+	// }, [])
 
 	return <div id="mapId" className={s.Layout} />
 }
