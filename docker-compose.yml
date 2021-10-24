@@ -1,55 +1,11 @@
 version: '3.8'
 
 services:
-  backend:
-    build: ./backend
-    container_name: backend
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      STAGE: test
-      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://test:test@db/test
-    networks:
-      - moscow-challenge
-    ports:
-      - 8000:5000
-    restart: always
-    volumes:
-      - ./backend/app:/moscow-challenge/app
-      - ./backend/tests:/moscow-challenge/tests
-  db:
-    image: postgres:latest
-    container_name: db
-    environment:
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
-      POSTGRES_DB: test
-    healthcheck:
-      test: pg_isready -U test -D test > /dev/null; if [[ $$? == 0 ]]; then echo 0; else echo 1; fi
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    networks:
-      - moscow-challenge
-    ports:
-      - 5432:5432
-    restart: unless-stopped
-    volumes:
-      - ./db/postgres-data:/var/lib/postgresql/data
   frontend:
     build: ./frontend
     container_name: frontend
-    depends_on:
-      - backend
-    networks:
-      - moscow-challenge
     ports:
       - 3000:3000
     restart: always
     volumes:
       - ./frontend:/moscow-challenge/frontend
-
-networks:
-  moscow-challenge:
-    driver: bridge
