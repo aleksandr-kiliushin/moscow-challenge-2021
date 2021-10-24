@@ -90,7 +90,7 @@ export const App = () => {
 			style: {
 				color: 'black',
 				fillColor: '#cf0000',
-				fillOpacity: 0.7,
+				fillOpacity: 0.3,
 				weight: 1,
 			},
 		}).addTo(map.current as Map)
