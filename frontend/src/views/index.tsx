@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import Leaflet, { LatLngExpression, Layer, Map } from 'leaflet'
-import 'leaflet.heat'
+import 'leaflet.heat' // Плагин для отрисовки тепловой карты.
 
-// Models
+// Models (импортируем функции инициализации данных для отображения на карте).
 import {
 	initializeAdministrativeDistrictsData,
 	initializeMunicipalDistrictsData,
-	initializeSchoolsData,
+	initializeExistingSchoolsData,
 } from '#models/map'
 
 // Utils
@@ -16,8 +16,8 @@ import { DataGenerator } from '../data/DataGenerator'
 // Styles
 import s from './index.module.css'
 
-// Assets
-import existingSchoolSvg from '../assets/existing-school-3.svg'
+// Assets (статические файлы - SVG иконки)
+import existingSchoolSvg from '../assets/existing-school.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
@@ -28,24 +28,29 @@ export const App = () => {
 
 	const map = useRef<Map | null>(null)
 
+	// Получаем данные из хранилища.
 	const administrativeDistrictsData = useAppSelector(
 		(state) => state.map.administrativeDistrictsData,
 	)
 	const municipalDistrictsData = useAppSelector((state) => state.map.municipalDistrictsData)
-	const schoolsData = useAppSelector((state) => state.map.schoolsData)
+	const schoolsData = useAppSelector((state) => state.map.existingSchoolsData)
 
 	useEffect(() => {
+		// Инициализируем получение данных при запуске приложения.
 		dispatch(initializeAdministrativeDistrictsData())
 		dispatch(initializeMunicipalDistrictsData())
-		dispatch(initializeSchoolsData())
+		dispatch(initializeExistingSchoolsData())
 
+		// Фиксируем окно с картой по координатам Москвы.
 		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
 
+		// Отображаем географическую карту на подложке.
 		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 		}).addTo(map.current)
 	}, [])
 
+	// Наносим на карту административные районы.
 	useEffect(() => {
 		Leaflet.geoJSON(administrativeDistrictsData, {
 			style: {
@@ -56,6 +61,7 @@ export const App = () => {
 		}).addTo(map.current as Map)
 	}, [administrativeDistrictsData])
 
+	// Наносим на карту муниципальные районы.
 	useEffect(() => {
 		const onEachFeature = (district: Feature<Geometry, any>, layer: Layer) => {
 			layer.bindPopup(district.properties.NAME, {
@@ -74,6 +80,7 @@ export const App = () => {
 		}).addTo(map.current as Map)
 	}, [municipalDistrictsData])
 
+	// Наносим на карту существующие школы.
 	useEffect(() => {
 		const onEachFeature = (school: Feature<Geometry, ISchool['properties']>, layer: Layer) => {
 			layer.bindPopup(school.properties.name, {
@@ -105,6 +112,7 @@ export const App = () => {
 		}).addTo(map.current as Map)
 	}, [schoolsData])
 
+	// Наносим на карту информацию о потребности в школах (тепловая карта).
 	useEffect(() => {
 		const points = DataGenerator.overPopulationHeatData()
 
