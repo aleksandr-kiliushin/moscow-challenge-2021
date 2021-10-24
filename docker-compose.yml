@@ -1,11 +1,11 @@
-version: '3.8'
+version: "3.8"
 
 services:
   frontend:
-    build: .
+    build: ./frontend
     container_name: frontend
     ports:
       - 3000:3000
     restart: always
     volumes:
-      - .:/moscow-challenge
+      - ./frontend:/moscow-challenge/frontend
