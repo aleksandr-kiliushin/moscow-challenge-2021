@@ -7,6 +7,7 @@ import {
 	initializeCellsData,
 	initializeMunicipalDistrictsData,
 	initializeSchoolsUnderConstructionData,
+	ISchoolUnderConstruction,
 } from '#models/map'
 
 // Utils
@@ -82,7 +83,7 @@ export const App = () => {
 		}).addTo(map.current as Map)
 	}, [municipalDistrictsData])
 
-	// Наносим на карту информацию о потребности в школах (тепловая карта).
+	// Наносим на карту информацию о потребности в школах.
 	useEffect(() => {
 		Leaflet.geoJSON(cellsData, {
 			filter: (cell) => !!cell.properties.is_out_overload,
@@ -95,8 +96,22 @@ export const App = () => {
 		}).addTo(map.current as Map)
 	}, [cellsData])
 
-	// Наносим на карту информацию о потребности в школах (тепловая карта).
+	// Наносим на карту информацию о строящихся школах.
 	useEffect(() => {
+		const onEachFeature = (
+			school: Feature<any, ISchoolUnderConstruction['properties']>,
+			layer: Layer,
+		) => {
+			layer.bindPopup(
+				`
+<strong>Имя объекта</strong>: ${school.properties.ObjectName}<br/>
+<strong>Кадастровый номер</strong>: ${school.properties.CadastralNumber}<br/>
+<strong>Имя документа</strong>: ${school.properties.GPZUDocumentNumber}
+`,
+				{ maxWidth: 500 },
+			)
+		}
+
 		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
 			const icon = Leaflet.icon({
 				iconSize: [27, 27],
@@ -108,6 +123,7 @@ export const App = () => {
 		}
 
 		Leaflet.geoJSON(schoolsUnderConstructionData, {
+			onEachFeature,
 			pointToLayer,
 		}).addTo(map.current as Map)
 	}, [schoolsUnderConstructionData])
