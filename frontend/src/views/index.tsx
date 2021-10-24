@@ -44,6 +44,8 @@ export const App = () => {
 		dispatch(initializeMunicipalDistrictsData())
 		dispatch(initializeSchoolsUnderConstructionData())
 
+		console.log('it works')
+
 		// Фиксируем окно с картой по координатам Москвы.
 		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
 
