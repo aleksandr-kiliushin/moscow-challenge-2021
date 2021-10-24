@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '#utils/hooks'
 import s from './index.module.css'
 
 // Assets (статические файлы - SVG иконки)
-import schoolsUnderConstructionSvg from '../assets/existing-school.svg'
+import schoolsUnderConstructionSvg from '../assets/school-under-construction.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
@@ -56,7 +56,7 @@ export const App = () => {
 	useEffect(() => {
 		Leaflet.geoJSON(administrativeDistrictsData, {
 			style: {
-				color: 'black',
+				color: '#444',
 				fill: false,
 				weight: 5,
 			},
@@ -74,9 +74,9 @@ export const App = () => {
 		Leaflet.geoJSON(municipalDistrictsData, {
 			onEachFeature,
 			style: {
-				color: 'black',
-				fillColor: 'black',
-				fillOpacity: 0.1,
+				color: '#888',
+				fillColor: '#888',
+				fillOpacity: 0.2,
 				weight: 2,
 			},
 		}).addTo(map.current as Map)
