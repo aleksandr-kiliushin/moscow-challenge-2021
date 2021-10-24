@@ -108,7 +108,7 @@ export const App = () => {
 <strong>Кадастровый номер</strong>: ${school.properties.CadastralNumber}<br/>
 <strong>Имя документа</strong>: ${school.properties.GPZUDocumentNumber}
 `,
-				{ maxWidth: 500 },
+				{ maxWidth: 400 },
 			)
 		}
 
