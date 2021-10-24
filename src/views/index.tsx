@@ -90,7 +90,7 @@ export const App = () => {
 				color: 'black',
 				fillColor: '#cf0000',
 				fillOpacity: 0.7,
-				weight: 2,
+				weight: 1,
 			},
 		}).addTo(map.current as Map)
 	}, [cellsData])
