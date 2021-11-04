@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import administrativeDistrictsData from '../../data/administrative-districts.json'
 import cellsData from '../../data/cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
+import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
 import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
 
 const initialState: IState = {
@@ -19,24 +20,8 @@ const initialState: IState = {
 		features: [],
 		type: 'FeatureCollection',
 	},
-	officesToBuyData: {
-		features: [
-			{
-				geometry: { coordinates: [37.5, 55.5], type: 'Point' },
-				properties: {},
-				type: 'Feature',
-			},
-			{
-				geometry: { coordinates: [37.53, 55.53], type: 'Point' },
-				properties: {},
-				type: 'Feature',
-			},
-			{
-				geometry: { coordinates: [37.54, 55.49], type: 'Point' },
-				properties: {},
-				type: 'Feature',
-			},
-		],
+	recommendedSchoolLocationsData: {
+		features: [],
 		type: 'FeatureCollection',
 	},
 	schoolsUnderConstructionData: {
@@ -49,31 +34,22 @@ const slice = createSlice({
 	name: 'map',
 	initialState,
 	reducers: {
-		initializeAdministrativeDistrictsData: (state) => {
+		initializeStaticMapData: (state) => {
 			// @ts-ignore
 			state.administrativeDistrictsData = administrativeDistrictsData
-		},
-		initializeCellsData: (state) => {
 			// @ts-ignore
 			state.cellsData = cellsData
-		},
-		initializeMunicipalDistrictsData: (state) => {
 			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
-		},
-		initializeSchoolsUnderConstructionData: (state) => {
+			// @ts-ignore
+			state.recommendedSchoolLocationsData = recommendedSchoolLocationsData
 			// @ts-ignore
 			state.schoolsUnderConstructionData = schoolsUnderConstructionData
 		},
 	},
 })
 
-export const {
-	initializeAdministrativeDistrictsData,
-	initializeCellsData,
-	initializeMunicipalDistrictsData,
-	initializeSchoolsUnderConstructionData,
-} = slice.actions
+export const { initializeStaticMapData } = slice.actions
 export const mapReducer = slice.reducer
 
 // Types
@@ -81,7 +57,7 @@ interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
 	cellsData: IGeoData<ICell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
-	officesToBuyData: IGeoData<IOfficeToBuy>
+	recommendedSchoolLocationsData: IGeoData<IRecommendedSchoolLocation>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
 }
 
@@ -159,7 +135,7 @@ interface IMunicipalDistrict {
 	type: 'Feature'
 }
 
-export interface IOfficeToBuy {
+export interface IRecommendedSchoolLocation {
 	properties: {}
 	geometry: IPointGeometry
 	type: 'Feature'

@@ -2,12 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import Leaflet, { LatLngExpression, Layer, Map } from 'leaflet'
 
 // Models
-import {
-	initializeAdministrativeDistrictsData,
-	initializeCellsData,
-	initializeMunicipalDistrictsData,
-	initializeSchoolsUnderConstructionData,
-} from '#models/map'
+import { initializeStaticMapData } from '#models/map'
 
 // Utils
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
@@ -21,7 +16,7 @@ import greenFlagSvg from '../assets/green-flag.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
-import { IOfficeToBuy, ISchoolUnderConstruction } from '#models/map'
+import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
 
 export const App = () => {
 	const dispatch = useAppDispatch()
@@ -34,17 +29,16 @@ export const App = () => {
 	)
 	const cellsData = useAppSelector((state) => state.map.cellsData)
 	const municipalDistrictsData = useAppSelector((state) => state.map.municipalDistrictsData)
-	const officesToBuyData = useAppSelector((state) => state.map.officesToBuyData)
+	const recommendedSchoolLocationsData = useAppSelector(
+		(state) => state.map.recommendedSchoolLocationsData,
+	)
 	const schoolsUnderConstructionData = useAppSelector(
 		(state) => state.map.schoolsUnderConstructionData,
 	)
 
 	useEffect(() => {
 		// Инициализируем получение данных при запуске приложения.
-		dispatch(initializeAdministrativeDistrictsData())
-		dispatch(initializeCellsData())
-		dispatch(initializeMunicipalDistrictsData())
-		dispatch(initializeSchoolsUnderConstructionData())
+		dispatch(initializeStaticMapData())
 
 		// Фиксируем окно с картой по координатам Москвы.
 		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
@@ -132,7 +126,10 @@ export const App = () => {
 
 	// Наносим на карту рекомендованные месторасположения школ.
 	useEffect(() => {
-		const onEachFeature = (school: Feature<any, IOfficeToBuy['properties']>, layer: Layer) => {
+		const onEachFeature = (
+			school: Feature<any, IRecommendedSchoolLocation['properties']>,
+			layer: Layer,
+		) => {
 			layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
 		}
 
@@ -146,11 +143,11 @@ export const App = () => {
 			return Leaflet.marker(latlng, { icon })
 		}
 
-		Leaflet.geoJSON(officesToBuyData, {
+		Leaflet.geoJSON(recommendedSchoolLocationsData, {
 			onEachFeature,
 			pointToLayer,
 		}).addTo(map.current as Map)
-	}, [officesToBuyData])
+	}, [recommendedSchoolLocationsData])
 
 	return <div id="mapId" className={s.Layout} />
 }
