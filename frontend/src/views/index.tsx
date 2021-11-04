@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { connect } from 'react-redux'
-import Leaflet, { LatLngExpression, Layer, Map } from 'leaflet'
+import Leaflet, { Layer, Map } from 'leaflet'
 
 // Models
 import { initializeStaticMapData } from '#models/map'
+
+// Components
+import { Legend } from './Legend'
 
 // Styles
 import s from './index.module.css'
@@ -14,6 +17,7 @@ import greenFlagSvg from '../assets/green-flag.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
+import { IconOptions, LatLngExpression } from 'leaflet'
 import { ConnectedProps } from 'react-redux'
 import { AppDispatch, RootState } from '#models/store'
 import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
@@ -27,6 +31,15 @@ const _App = ({
 	schoolsUnderConstructionData,
 }: IProps) => {
 	const map = useRef<Map | null>(null)
+
+	const commonIconProps = useMemo(
+		() => ({
+			iconSize: [40, 40],
+			iconAnchor: [20, 40],
+			popupAnchor: [1, -24],
+		}),
+		[],
+	)
 
 	useEffect(() => {
 		// Инициализируем получение данных при запуске приложения.
@@ -102,9 +115,7 @@ const _App = ({
 
 		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
 			const icon = Leaflet.icon({
-				iconSize: [40, 40],
-				iconAnchor: [20, 40],
-				popupAnchor: [1, -24],
+				...(commonIconProps as Partial<IconOptions>),
 				iconUrl: schoolsUnderConstructionSvg,
 			})
 			return Leaflet.marker(latlng, { icon })
@@ -127,9 +138,7 @@ const _App = ({
 
 		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
 			const icon = Leaflet.icon({
-				iconSize: [40, 40],
-				iconAnchor: [20, 40],
-				popupAnchor: [1, -24],
+				...(commonIconProps as Partial<IconOptions>),
 				iconUrl: greenFlagSvg,
 			})
 			return Leaflet.marker(latlng, { icon })
@@ -141,7 +150,12 @@ const _App = ({
 		}).addTo(map.current as Map)
 	}, [recommendedSchoolLocationsData])
 
-	return <div id="mapId" className={s.Layout} />
+	return (
+		<div className={s.Layout}>
+			<div id="mapId" />
+			<Legend />
+		</div>
+	)
 }
 
 const mapStateToProps = (state: RootState) => ({
