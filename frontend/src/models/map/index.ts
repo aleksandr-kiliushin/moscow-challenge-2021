@@ -19,6 +19,26 @@ const initialState: IState = {
 		features: [],
 		type: 'FeatureCollection',
 	},
+	officesToBuyData: {
+		features: [
+			{
+				geometry: { coordinates: [37.5, 55.5], type: 'Point' },
+				properties: {},
+				type: 'Feature',
+			},
+			{
+				geometry: { coordinates: [37.53, 55.53], type: 'Point' },
+				properties: {},
+				type: 'Feature',
+			},
+			{
+				geometry: { coordinates: [37.54, 55.49], type: 'Point' },
+				properties: {},
+				type: 'Feature',
+			},
+		],
+		type: 'FeatureCollection',
+	},
 	schoolsUnderConstructionData: {
 		features: [],
 		type: 'FeatureCollection',
@@ -61,6 +81,7 @@ interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
 	cellsData: IGeoData<ICell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
+	officesToBuyData: IGeoData<IOfficeToBuy>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
 }
 
@@ -77,6 +98,11 @@ interface IMultiPolygonGeometry {
 interface IPolygonGeometry {
 	coordinates: [number, number][][]
 	type: 'Polygon'
+}
+
+interface IPointGeometry {
+	coordinates: [number, number]
+	type: 'Point'
 }
 
 interface IAdministrativeDistrict {
@@ -133,15 +159,18 @@ interface IMunicipalDistrict {
 	type: 'Feature'
 }
 
+export interface IOfficeToBuy {
+	properties: {}
+	geometry: IPointGeometry
+	type: 'Feature'
+}
+
 export interface ISchoolUnderConstruction {
 	properties: {
 		CadastralNumber: string
 		GPZUDocumentNumber: string
 		ObjectName: string
 	}
-	geometry: {
-		type: 'Point'
-		coordinates: [number, number]
-	}
+	geometry: IPointGeometry
 	type: 'Feature'
 }

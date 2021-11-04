@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import Leaflet, { LatLngExpression, Layer, Map } from 'leaflet'
 
-// Models (импортируем функции инициализации данных для отображения на карте).
+// Models
 import {
 	initializeAdministrativeDistrictsData,
 	initializeCellsData,
 	initializeMunicipalDistrictsData,
 	initializeSchoolsUnderConstructionData,
-	ISchoolUnderConstruction,
 } from '#models/map'
 
 // Utils
@@ -16,11 +15,13 @@ import { useAppDispatch, useAppSelector } from '#utils/hooks'
 // Styles
 import s from './index.module.css'
 
-// Assets (статические файлы - SVG иконки)
+// Assets
 import schoolsUnderConstructionSvg from '../assets/school-under-construction.svg'
+import greenFlagSvg from '../assets/green-flag.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
+import { IOfficeToBuy, ISchoolUnderConstruction } from '#models/map'
 
 export const App = () => {
 	const dispatch = useAppDispatch()
@@ -33,6 +34,7 @@ export const App = () => {
 	)
 	const cellsData = useAppSelector((state) => state.map.cellsData)
 	const municipalDistrictsData = useAppSelector((state) => state.map.municipalDistrictsData)
+	const officesToBuyData = useAppSelector((state) => state.map.officesToBuyData)
 	const schoolsUnderConstructionData = useAppSelector(
 		(state) => state.map.schoolsUnderConstructionData,
 	)
@@ -127,6 +129,28 @@ export const App = () => {
 			pointToLayer,
 		}).addTo(map.current as Map)
 	}, [schoolsUnderConstructionData])
+
+	// Наносим на карту рекомендованные месторасположения школ.
+	useEffect(() => {
+		const onEachFeature = (school: Feature<any, IOfficeToBuy['properties']>, layer: Layer) => {
+			layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
+		}
+
+		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
+			const icon = Leaflet.icon({
+				iconSize: [40, 40],
+				iconAnchor: [20, 40],
+				popupAnchor: [1, -24],
+				iconUrl: greenFlagSvg,
+			})
+			return Leaflet.marker(latlng, { icon })
+		}
+
+		Leaflet.geoJSON(officesToBuyData, {
+			onEachFeature,
+			pointToLayer,
+		}).addTo(map.current as Map)
+	}, [officesToBuyData])
 
 	return <div id="mapId" className={s.Layout} />
 }
