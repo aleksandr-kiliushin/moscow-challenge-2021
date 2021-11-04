@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from 'react'
+import { connect } from 'react-redux'
 import Leaflet, { LatLngExpression, Layer, Map } from 'leaflet'
 
 // Models
 import { initializeStaticMapData } from '#models/map'
-
-// Utils
-import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
 // Styles
 import s from './index.module.css'
@@ -16,29 +14,23 @@ import greenFlagSvg from '../assets/green-flag.svg'
 
 // Types
 import { Feature, Geometry } from 'geojson'
+import { ConnectedProps } from 'react-redux'
+import { AppDispatch, RootState } from '#models/store'
 import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
 
-export const App = () => {
-	const dispatch = useAppDispatch()
-
+const _App = ({
+	administrativeDistrictsData,
+	cellsData,
+	initializeStaticMapData,
+	municipalDistrictsData,
+	recommendedSchoolLocationsData,
+	schoolsUnderConstructionData,
+}: IProps) => {
 	const map = useRef<Map | null>(null)
-
-	// Получаем данные из хранилища.
-	const administrativeDistrictsData = useAppSelector(
-		(state) => state.map.administrativeDistrictsData,
-	)
-	const cellsData = useAppSelector((state) => state.map.cellsData)
-	const municipalDistrictsData = useAppSelector((state) => state.map.municipalDistrictsData)
-	const recommendedSchoolLocationsData = useAppSelector(
-		(state) => state.map.recommendedSchoolLocationsData,
-	)
-	const schoolsUnderConstructionData = useAppSelector(
-		(state) => state.map.schoolsUnderConstructionData,
-	)
 
 	useEffect(() => {
 		// Инициализируем получение данных при запуске приложения.
-		dispatch(initializeStaticMapData())
+		initializeStaticMapData()
 
 		// Фиксируем окно с картой по координатам Москвы.
 		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
@@ -151,3 +143,21 @@ export const App = () => {
 
 	return <div id="mapId" className={s.Layout} />
 }
+
+const mapStateToProps = (state: RootState) => ({
+	administrativeDistrictsData: state.map.administrativeDistrictsData,
+	cellsData: state.map.cellsData,
+	municipalDistrictsData: state.map.municipalDistrictsData,
+	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
+	schoolsUnderConstructionData: state.map.schoolsUnderConstructionData,
+})
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+	initializeStaticMapData: () => dispatch(initializeStaticMapData()),
+})
+
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+type IProps = ConnectedProps<typeof connector>
+
+export const App = connector(_App)
