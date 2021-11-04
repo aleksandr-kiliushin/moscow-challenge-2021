@@ -1,5 +1,8 @@
 import React from 'react'
 
+// Components
+import { LegendItem } from './LegendItem'
+
 // Styles
 import s from './index.module.css'
 
@@ -10,8 +13,21 @@ import schoolsUnderConstructionSvg from '../../assets/school-under-construction.
 export const Legend = () => {
 	return (
 		<div className={s.Legend}>
-			<img className={s.LegendIcon} src={schoolsUnderConstructionSvg} />
-			<img className={s.LegendIcon} src={greenFlagSvg} />
+			<LegendItem label="Район, в котором наблюдается нехватка школ">
+				<div className={s.ProblemPolygonLegendIcon}>
+					<div className={s.ProblemPolygon} />
+					<div className={s.ProblemPolygon} />
+					<div className={s.ProblemPolygon} />
+				</div>
+			</LegendItem>
+
+			<LegendItem label="Строящаяся школа">
+				<img className={s.LegendIcon} src={schoolsUnderConstructionSvg} />
+			</LegendItem>
+
+			<LegendItem label="Рекомендуемое месторасположение школы">
+				<img className={s.LegendIcon} src={greenFlagSvg} />
+			</LegendItem>
 		</div>
 	)
 }

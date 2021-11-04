@@ -1,0 +1,9 @@
+.LegendItem {
+	display: flex;
+	align-items: center;
+	column-gap: 8px;
+}
+
+.LegendItemLabel {
+	font-size: smaller;
+}
