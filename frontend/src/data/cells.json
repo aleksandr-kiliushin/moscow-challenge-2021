@@ -605,46 +605,6 @@
 			"geometry": {
 				"coordinates": [
 					[
-						[36.98588638487425, 55.18501461841555],
-						[36.99373654826597, 55.185047456370896],
-						[36.993679591428695, 55.189539153393945],
-						[36.98582854495359, 55.18950630997837],
-						[36.98588638487425, 55.18501461841555]
-					]
-				],
-				"type": "Polygon"
-			},
-			"properties": {
-				"field1": 72,
-				"cell_zid": 36460,
-				"month": "December",
-				"year": 2020,
-				"schoolchildren_self_load_mean": "",
-				"customers_cnt_self": "",
-				"self_overload": "",
-				"is_self_overload": "",
-				"self_overload_cross_mean": "",
-				"is_self_overload_cross_mean": "",
-				"customers_cnt_out": 1129453,
-				"out_overload": 105.69464720194647,
-				"is_out_overload": true,
-				"out_overload_cross_mean": 81.64766065791099,
-				"is_out_overload_cross_mean": true,
-				"customers_cnt_in": "",
-				"in_overload": "",
-				"is_in_overload": "",
-				"in_overload_cross_mean": "",
-				"is_in_overload_cross_mean": "",
-				"global_id": "",
-				"ObjectName": "",
-				"ObjectAddress": ""
-			},
-			"type": "Feature"
-		},
-		{
-			"geometry": {
-				"coordinates": [
-					[
 						[37.009050260883974, 55.21655350078059],
 						[37.01690665914059, 55.21658485947873],
 						[37.016852245187046, 55.2210765493741],
@@ -669,46 +629,6 @@
 				"out_overload": 1.7054089462848587,
 				"is_out_overload": false,
 				"out_overload_cross_mean": 2.2941459145838707,
-				"is_out_overload_cross_mean": true,
-				"customers_cnt_in": "",
-				"in_overload": "",
-				"is_in_overload": "",
-				"in_overload_cross_mean": "",
-				"is_in_overload_cross_mean": "",
-				"global_id": "",
-				"ObjectName": "",
-				"ObjectAddress": ""
-			},
-			"type": "Feature"
-		},
-		{
-			"geometry": {
-				"coordinates": [
-					[
-						[37.032145167145984, 55.25707123791469],
-						[37.04000958190655, 55.25710112379755],
-						[37.03995769196158, 55.26159279859929],
-						[37.03209239012153, 55.26156290774237],
-						[37.032145167145984, 55.25707123791469]
-					]
-				],
-				"type": "Polygon"
-			},
-			"properties": {
-				"field1": 80,
-				"cell_zid": 43400,
-				"month": "December",
-				"year": 2020,
-				"schoolchildren_self_load_mean": "",
-				"customers_cnt_self": "",
-				"self_overload": "",
-				"is_self_overload": "",
-				"self_overload_cross_mean": "",
-				"is_self_overload_cross_mean": "",
-				"customers_cnt_out": 701274,
-				"out_overload": 65.62549129702414,
-				"is_out_overload": true,
-				"out_overload_cross_mean": 40.461394297160716,
 				"is_out_overload_cross_mean": true,
 				"customers_cnt_in": "",
 				"in_overload": "",
