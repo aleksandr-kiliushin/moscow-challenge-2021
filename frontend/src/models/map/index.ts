@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // Data
 import administrativeDistrictsData from '../../data/administrative-districts.json'
-import cellsData from '../../data/cells.json'
+import schoolProblemCellsData from '../../data/school-problem-cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
 import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
 import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
@@ -12,7 +12,7 @@ const initialState: IState = {
 		features: [],
 		type: 'FeatureCollection',
 	},
-	cellsData: {
+	schoolProblemCellsData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
@@ -38,7 +38,7 @@ const slice = createSlice({
 			// @ts-ignore
 			state.administrativeDistrictsData = administrativeDistrictsData
 			// @ts-ignore
-			state.cellsData = cellsData
+			state.schoolProblemCellsData = schoolProblemCellsData
 			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
 			// @ts-ignore
@@ -55,7 +55,7 @@ export const mapReducer = slice.reducer
 // Types
 interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
-	cellsData: IGeoData<ICell>
+	schoolProblemCellsData: IGeoData<ISchoolProblemCell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
 	recommendedSchoolLocationsData: IGeoData<IRecommendedSchoolLocation>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
@@ -91,7 +91,7 @@ interface IAdministrativeDistrict {
 	type: 'Feature'
 }
 
-export interface ICell {
+export interface ISchoolProblemCell {
 	geometry: IPolygonGeometry
 	properties: {
 		field1: number

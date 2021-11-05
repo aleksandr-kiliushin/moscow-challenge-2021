@@ -24,7 +24,7 @@ import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/ma
 
 const _App = ({
 	administrativeDistrictsData,
-	cellsData,
+	schoolProblemCellsData,
 	initializeStaticMapData,
 	municipalDistrictsData,
 	recommendedSchoolLocationsData,
@@ -96,7 +96,7 @@ const _App = ({
 
 	// Наносим на карту информацию о потребности в школах.
 	useEffect(() => {
-		Leaflet.geoJSON(cellsData, {
+		Leaflet.geoJSON(schoolProblemCellsData, {
 			filter: (cell) => !!cell.properties.is_out_overload,
 			style: {
 				color: 'black',
@@ -105,7 +105,7 @@ const _App = ({
 				weight: 1,
 			},
 		}).addTo(map.current as Map)
-	}, [cellsData])
+	}, [schoolProblemCellsData])
 
 	// Наносим на карту информацию о строящихся школах.
 	useEffect(() => {
@@ -170,7 +170,7 @@ const _App = ({
 
 const mapStateToProps = (state: RootState) => ({
 	administrativeDistrictsData: state.map.administrativeDistrictsData,
-	cellsData: state.map.cellsData,
+	schoolProblemCellsData: state.map.schoolProblemCellsData,
 	municipalDistrictsData: state.map.municipalDistrictsData,
 	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
 	schoolsUnderConstructionData: state.map.schoolsUnderConstructionData,
