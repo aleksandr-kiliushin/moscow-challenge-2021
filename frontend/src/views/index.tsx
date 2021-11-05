@@ -25,6 +25,7 @@ import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/ma
 const _App = ({
 	administrativeDistrictsData,
 	initializeStaticMapData,
+	mfcProblemCellsData,
 	municipalDistrictsData,
 	recommendedSchoolLocationsData,
 	schoolProblemCellsData,
@@ -76,13 +77,14 @@ const _App = ({
 		Leaflet.geoJSON(municipalDistrictsData, {
 			onEachFeature,
 			style: (municipalDistrict) => {
-				const isDistrictBad = [
-					'Кокошкино',
-					'Ново-Переделкино',
-					'Московский',
-					'Солнцево',
-					'Щербинка',
-				].includes(municipalDistrict?.properties.NAME)
+				const isDistrictBad = false
+				// const isDistrictBad = [
+				// 	'Кокошкино',
+				// 	'Ново-Переделкино',
+				// 	'Московский',
+				// 	'Солнцево',
+				// 	'Щербинка',
+				// ].includes(municipalDistrict?.properties.NAME)
 
 				return {
 					color: '#888',
@@ -106,6 +108,18 @@ const _App = ({
 			},
 		}).addTo(map.current as Map)
 	}, [schoolProblemCellsData])
+
+	// Наносим на карту информацию о потребности в МФЦ.
+	useEffect(() => {
+		Leaflet.geoJSON(mfcProblemCellsData, {
+			style: {
+				color: 'black',
+				fillColor: '#cf0000',
+				fillOpacity: 0.6,
+				weight: 1,
+			},
+		}).addTo(map.current as Map)
+	}, [mfcProblemCellsData])
 
 	// Наносим на карту информацию о строящихся школах.
 	useEffect(() => {
@@ -170,6 +184,7 @@ const _App = ({
 
 const mapStateToProps = (state: RootState) => ({
 	administrativeDistrictsData: state.map.administrativeDistrictsData,
+	mfcProblemCellsData: state.map.mfcProblemCellsData,
 	municipalDistrictsData: state.map.municipalDistrictsData,
 	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
 	schoolProblemCellsData: state.map.schoolProblemCellsData,

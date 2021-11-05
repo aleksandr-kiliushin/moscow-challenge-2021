@@ -2,10 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // Data
 import administrativeDistrictsData from '../../data/administrative-districts.json'
+// import mfcProblemCellsData from '../../data/mfc-problem-cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
-import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
-import schoolProblemCellsData from '../../data/school-problem-cells.json'
-import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
+// import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
+// import schoolProblemCellsData from '../../data/school-problem-cells.json'
+// import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
 
 const initialState: IState = {
 	administrativeDistrictsData: {
@@ -24,6 +25,10 @@ const initialState: IState = {
 		features: [],
 		type: 'FeatureCollection',
 	},
+	mfcProblemCellsData: {
+		features: [],
+		type: 'FeatureCollection',
+	},
 	schoolsUnderConstructionData: {
 		features: [],
 		type: 'FeatureCollection',
@@ -37,13 +42,14 @@ const slice = createSlice({
 		initializeStaticMapData: (state) => {
 			// @ts-ignore
 			state.administrativeDistrictsData = administrativeDistrictsData
+			// state.mfcProblemCellsData = mfcProblemCellsData as IGeoData<IProblemCell>
 			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
-			state.recommendedSchoolLocationsData =
-				recommendedSchoolLocationsData as IGeoData<IRecommendedSchoolLocation>
-			state.schoolProblemCellsData = schoolProblemCellsData as IGeoData<ISchoolProblemCell>
-			state.schoolsUnderConstructionData =
-				schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
+			// state.recommendedSchoolLocationsData =
+			// 	recommendedSchoolLocationsData as IGeoData<IRecommendedSchoolLocation>
+			// state.schoolProblemCellsData = schoolProblemCellsData as IGeoData<ISchoolProblemCell>
+			// state.schoolsUnderConstructionData =
+			// 	schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
 		},
 	},
 })
@@ -54,9 +60,10 @@ export const mapReducer = slice.reducer
 // Types
 interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
+	mfcProblemCellsData: IGeoData<IProblemCell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
 	recommendedSchoolLocationsData: IGeoData<IRecommendedSchoolLocation>
-	schoolProblemCellsData: IGeoData<ISchoolProblemCell>
+	schoolProblemCellsData: IGeoData<IProblemCell>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
 }
 
@@ -90,32 +97,10 @@ interface IAdministrativeDistrict {
 	type: 'Feature'
 }
 
-export interface ISchoolProblemCell {
+export interface IProblemCell {
 	geometry: IPolygonGeometry
 	properties: {
-		field1: number
 		cell_zid: number
-		month: string
-		year: number
-		schoolchildren_self_load_mean: number
-		customers_cnt_self: number
-		self_overload: number
-		is_self_overload: boolean | string
-		self_overload_cross_mean: number
-		is_self_overload_cross_mean: boolean | string
-		customers_cnt_out: number
-		out_overload: number
-		is_out_overload: boolean | string
-		out_overload_cross_mean: number
-		is_out_overload_cross_mean: boolean | string
-		customers_cnt_in: number
-		in_overload: number
-		is_in_overload: boolean | string
-		in_overload_cross_mean: number
-		is_in_overload_cross_mean: boolean | string
-		global_id: ''
-		ObjectName: ''
-		ObjectAddress: ''
 	}
 	type: 'Feature'
 }
