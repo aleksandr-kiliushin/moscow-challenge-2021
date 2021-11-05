@@ -1,6 +1,6 @@
 .Layout {
 	display: grid;
-	grid-template-rows: 1fr auto;
+	grid-template-rows: auto 1fr;
 	height: 100vh;
 	width: 100vw;
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // Components
 import { LegendItem } from './LegendItem'
@@ -11,8 +11,20 @@ import greenFlagSvg from '../../assets/green-flag.svg'
 import schoolsUnderConstructionSvg from '../../assets/school-under-construction.svg'
 
 export const Legend = () => {
+	const [selectedInfrastructureType, setSelectedInfrastructureType] = useState('school')
+
 	return (
 		<div className={s.Legend}>
+			<select
+				value={selectedInfrastructureType}
+				onChange={(event) => {
+					setSelectedInfrastructureType(event.target.value)
+				}}
+			>
+				<option value="mfc">МФЦ</option>
+				<option value="school">Школы</option>
+			</select>
+
 			<LegendItem label="Локация в повышенным и неудовлетворенным спросом">
 				<div className={s.ProblemPolygonLegendIcon}>
 					<div className={s.ProblemPolygon} />

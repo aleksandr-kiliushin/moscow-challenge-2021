@@ -176,8 +176,8 @@ const _App = ({
 
 	return (
 		<div className={s.Layout}>
-			<div id="mapId" />
 			<Legend />
+			<div id="mapId" />
 		</div>
 	)
 }
