@@ -20,7 +20,7 @@ import { Feature, Geometry } from 'geojson'
 import { IconOptions, LatLngExpression } from 'leaflet'
 import { ConnectedProps } from 'react-redux'
 import { AppDispatch, RootState } from '#models/store'
-import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
+import { ICell, IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
 
 const _App = ({
 	administrativeDistrictsData,

@@ -91,7 +91,7 @@ interface IAdministrativeDistrict {
 	type: 'Feature'
 }
 
-interface ICell {
+export interface ICell {
 	geometry: IPolygonGeometry
 	properties: {
 		field1: number
