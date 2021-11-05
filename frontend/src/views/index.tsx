@@ -31,6 +31,7 @@ const _App = ({
 	recommendedSchoolLocationsData,
 	schoolProblemCellsData,
 	schoolsUnderConstructionData,
+	shownInfrastructureType,
 }: IProps) => {
 	const map = useRef<Map | null>(null)
 
@@ -191,6 +192,7 @@ const mapStateToProps = (state: RootState) => ({
 	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
 	schoolProblemCellsData: state.map.schoolProblemCellsData,
 	schoolsUnderConstructionData: state.map.schoolsUnderConstructionData,
+	shownInfrastructureType: state.map.shownInfrastructureType,
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
