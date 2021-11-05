@@ -21,6 +21,7 @@ import { IconOptions, LatLngExpression } from 'leaflet'
 import { ConnectedProps } from 'react-redux'
 import { AppDispatch, RootState } from '#models/store'
 import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
+import { InfrastructureTypeSelect } from './InfrastructureTypeSelect/Legend'
 
 const _App = ({
 	administrativeDistrictsData,
@@ -178,6 +179,7 @@ const _App = ({
 		<div className={s.Layout}>
 			<div id="mapId" />
 			<Legend />
+			<InfrastructureTypeSelect />
 		</div>
 	)
 }
