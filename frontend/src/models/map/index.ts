@@ -2,17 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // Data
 import administrativeDistrictsData from '../../data/administrative-districts.json'
-import schoolProblemCellsData from '../../data/school-problem-cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
 import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
+import schoolProblemCellsData from '../../data/school-problem-cells.json'
 import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
 
 const initialState: IState = {
 	administrativeDistrictsData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
-	schoolProblemCellsData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
@@ -21,6 +17,10 @@ const initialState: IState = {
 		type: 'FeatureCollection',
 	},
 	recommendedSchoolLocationsData: {
+		features: [],
+		type: 'FeatureCollection',
+	},
+	schoolProblemCellsData: {
 		features: [],
 		type: 'FeatureCollection',
 	},
@@ -38,13 +38,12 @@ const slice = createSlice({
 			// @ts-ignore
 			state.administrativeDistrictsData = administrativeDistrictsData
 			// @ts-ignore
-			state.schoolProblemCellsData = schoolProblemCellsData
-			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
-			// @ts-ignore
-			state.recommendedSchoolLocationsData = recommendedSchoolLocationsData
-			// @ts-ignore
-			state.schoolsUnderConstructionData = schoolsUnderConstructionData
+			state.recommendedSchoolLocationsData =
+				recommendedSchoolLocationsData as IGeoData<IRecommendedSchoolLocation>
+			state.schoolProblemCellsData = schoolProblemCellsData as IGeoData<ISchoolProblemCell>
+			state.schoolsUnderConstructionData =
+				schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
 		},
 	},
 })
@@ -55,9 +54,9 @@ export const mapReducer = slice.reducer
 // Types
 interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
-	schoolProblemCellsData: IGeoData<ISchoolProblemCell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
 	recommendedSchoolLocationsData: IGeoData<IRecommendedSchoolLocation>
+	schoolProblemCellsData: IGeoData<ISchoolProblemCell>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
 }
 

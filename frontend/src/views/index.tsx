@@ -24,10 +24,10 @@ import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/ma
 
 const _App = ({
 	administrativeDistrictsData,
-	schoolProblemCellsData,
 	initializeStaticMapData,
 	municipalDistrictsData,
 	recommendedSchoolLocationsData,
+	schoolProblemCellsData,
 	schoolsUnderConstructionData,
 }: IProps) => {
 	const map = useRef<Map | null>(null)
@@ -170,9 +170,9 @@ const _App = ({
 
 const mapStateToProps = (state: RootState) => ({
 	administrativeDistrictsData: state.map.administrativeDistrictsData,
-	schoolProblemCellsData: state.map.schoolProblemCellsData,
 	municipalDistrictsData: state.map.municipalDistrictsData,
 	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
+	schoolProblemCellsData: state.map.schoolProblemCellsData,
 	schoolsUnderConstructionData: state.map.schoolsUnderConstructionData,
 })
 
