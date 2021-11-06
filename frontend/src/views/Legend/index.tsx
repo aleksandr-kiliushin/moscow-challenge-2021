@@ -8,7 +8,7 @@ import s from './index.module.css'
 
 // Assets
 import greenFlagSvg from '../../assets/green-flag.svg'
-import schoolsUnderConstructionSvg from '../../assets/school-under-construction.svg'
+import objectUnderConstructionSvg from '../../assets/school-under-construction.svg'
 import { Modal } from '#components/Modal'
 import { ModalHeader } from '#components/Modal/ModalHeader'
 
@@ -18,10 +18,15 @@ import { ReactNode } from 'react'
 export const Legend = () => {
 	const [shownLegendItem, setShownLegendItem] = useState<ILegendItem | null>(null)
 
+	const problemPolygonDescription = <div>hehe</div>
+	const objectUnderConstructionDescription = <div>hehe</div>
+	const suggestedOfficesToBuyDescription = <div>hehe</div>
+
 	return (
 		<>
 			<div className={s.Legend}>
 				<LegendItem
+					description={problemPolygonDescription}
 					label="Локация в повышенным и неудовлетворенным спросом"
 					labelWidth={240}
 					setShownLegendItem={setShownLegendItem}
@@ -34,14 +39,16 @@ export const Legend = () => {
 				</LegendItem>
 
 				<LegendItem
+					description={objectUnderConstructionDescription}
 					label="Объект в стадии строительства"
 					labelWidth={130}
 					setShownLegendItem={setShownLegendItem}
 				>
-					<img className={s.LegendIcon} src={schoolsUnderConstructionSvg} />
+					<img className={s.LegendIcon} src={objectUnderConstructionSvg} />
 				</LegendItem>
 
 				<LegendItem
+					description={suggestedOfficesToBuyDescription}
 					label="Рекомендуемое месторасположение"
 					labelWidth={160}
 					setShownLegendItem={setShownLegendItem}
@@ -56,6 +63,8 @@ export const Legend = () => {
 						{shownLegendItem.icon}
 						{shownLegendItem.label}
 					</ModalHeader>
+
+					{shownLegendItem.description}
 				</Modal>
 			)}
 		</>
@@ -63,6 +72,7 @@ export const Legend = () => {
 }
 
 export interface ILegendItem {
+	description: ReactNode
 	icon: ReactNode
 	label: string
 }

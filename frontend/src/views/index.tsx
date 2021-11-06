@@ -248,11 +248,3 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type IProps = ConnectedProps<typeof connector>
 
 export const App = connector(_App)
-
-// const isDistrictBad = [
-// 	'Кокошкино',
-// 	'Ново-Переделкино',
-// 	'Московский',
-// 	'Солнцево',
-// 	'Щербинка',
-// ].includes(municipalDistrict?.properties.NAME)

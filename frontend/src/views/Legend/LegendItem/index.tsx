@@ -10,7 +10,13 @@ import s from './index.module.css'
 import { ReactNode } from 'react'
 import { ILegendItem } from '..'
 
-export const LegendItem = ({ children, label, labelWidth, setShownLegendItem }: IProps) => {
+export const LegendItem = ({
+	children,
+	description,
+	label,
+	labelWidth,
+	setShownLegendItem,
+}: IProps) => {
 	return (
 		<div className={s.LegendItem}>
 			{children}
@@ -19,13 +25,19 @@ export const LegendItem = ({ children, label, labelWidth, setShownLegendItem }: 
 				{label}
 			</div>
 
-			<InfoSign icon={children} label={label} setShownLegendItem={setShownLegendItem} />
+			<InfoSign
+				description={description}
+				icon={children}
+				label={label}
+				setShownLegendItem={setShownLegendItem}
+			/>
 		</div>
 	)
 }
 
 interface IProps {
 	children: ReactNode
+	description: ReactNode
 	label: string
 	labelWidth: number
 	setShownLegendItem: (item: ILegendItem) => void

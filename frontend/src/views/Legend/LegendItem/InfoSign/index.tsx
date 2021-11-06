@@ -7,12 +7,12 @@ import s from './index.module.css'
 import { ReactNode } from 'react'
 import { ILegendItem } from '#views/Legend'
 
-export const InfoSign = ({ icon, label, setShownLegendItem }: IProps) => {
+export const InfoSign = ({ description, icon, label, setShownLegendItem }: IProps) => {
 	return (
 		<div
 			className={s.InfoSign}
 			onClick={() => {
-				setShownLegendItem({ icon, label })
+				setShownLegendItem({ description, icon, label })
 			}}
 		>
 			i
@@ -21,6 +21,7 @@ export const InfoSign = ({ icon, label, setShownLegendItem }: IProps) => {
 }
 
 interface IProps {
+	description: ReactNode
 	icon: ReactNode
 	label: string
 	setShownLegendItem: (item: ILegendItem) => void
