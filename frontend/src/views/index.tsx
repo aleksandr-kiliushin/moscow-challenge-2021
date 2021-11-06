@@ -57,8 +57,12 @@ const _App = ({
 		}).addTo(map.current)
 	}, [])
 
-	// Наносим на карту административные районы.
+	// Наносим на карту административные и муниципальные районы.
 	useEffect(() => {
+		if (!administrativeDistrictsData.features.length || !municipalDistrictsData.features.length) {
+			return
+		}
+
 		Leaflet.geoJSON(administrativeDistrictsData, {
 			style: {
 				color: '#444',
@@ -66,16 +70,12 @@ const _App = ({
 				weight: 5,
 			},
 		}).addTo(map.current as Map)
-	}, [administrativeDistrictsData])
 
-	// Наносим на карту муниципальные районы.
-	useEffect(() => {
 		const onEachFeature = (district: Feature<Geometry, any>, layer: Layer) => {
 			layer.bindPopup(district.properties.NAME, {
 				maxWidth: 450,
 			})
 		}
-
 		Leaflet.geoJSON(municipalDistrictsData, {
 			onEachFeature,
 			style: (municipalDistrict) => {
@@ -96,7 +96,7 @@ const _App = ({
 				}
 			},
 		}).addTo(map.current as Map)
-	}, [municipalDistrictsData])
+	}, [administrativeDistrictsData, municipalDistrictsData])
 
 	// Наносим на карту информацию о потребности в школах.
 	useEffect(() => {
