@@ -98,10 +98,18 @@ const _App = ({
 		}).addTo(map.current as Map)
 	}, [administrativeDistrictsData, municipalDistrictsData])
 
-	// Наносим на карту информацию о потребности в школах.
+	// Наносим на карту информацию об объектах инфраструктуры.
 	useEffect(() => {
+		if (
+			!mfcProblemCellsData.features.length ||
+			!recommendedSchoolLocationsData.features.length ||
+			!schoolProblemCellsData.features.length ||
+			!schoolsUnderConstructionData.features.length
+		) {
+			return
+		}
+
 		Leaflet.geoJSON(schoolProblemCellsData, {
-			filter: (cell) => !!cell.properties.is_out_overload,
 			style: {
 				color: 'black',
 				fillColor: '#cf0000',
@@ -109,72 +117,138 @@ const _App = ({
 				weight: 1,
 			},
 		}).addTo(map.current as Map)
-	}, [schoolProblemCellsData])
 
-	// Наносим на карту информацию о потребности в МФЦ.
-	useEffect(() => {
-		Leaflet.geoJSON(mfcProblemCellsData, {
-			style: {
-				color: 'black',
-				fillColor: '#cf0000',
-				fillOpacity: 0.6,
-				weight: 1,
-			},
-		}).addTo(map.current as Map)
-	}, [mfcProblemCellsData])
+		// Leaflet.geoJSON(mfcProblemCellsData, {
+		// 	style: {
+		// 		color: 'black',
+		// 		fillColor: '#cf0000',
+		// 		fillOpacity: 0.6,
+		// 		weight: 1,
+		// 	},
+		// }).addTo(map.current as Map)
 
-	// Наносим на карту информацию о строящихся школах.
-	useEffect(() => {
-		const onEachFeature = (
-			school: Feature<any, ISchoolUnderConstruction['properties']>,
-			layer: Layer,
-		) => {
-			layer.bindPopup(
-				`
+		Leaflet.geoJSON(schoolsUnderConstructionData, {
+			onEachFeature: (
+				school: Feature<any, ISchoolUnderConstruction['properties']>,
+				layer: Layer,
+			) => {
+				layer.bindPopup(
+					`
 <strong>Имя объекта</strong>: ${school.properties.ObjectName}<br/>
 <strong>Кадастровый номер</strong>: ${school.properties.CadastralNumber}<br/>
 <strong>Имя документа</strong>: ${school.properties.GPZUDocumentNumber}
 `,
-				{ maxWidth: 400 },
-			)
-		}
-
-		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
-			const icon = Leaflet.icon({
-				...(commonIconProps as Partial<IconOptions>),
-				iconUrl: schoolsUnderConstructionSvg,
-			})
-			return Leaflet.marker(latlng, { icon })
-		}
-
-		Leaflet.geoJSON(schoolsUnderConstructionData, {
-			onEachFeature,
-			pointToLayer,
+					{ maxWidth: 400 },
+				)
+			},
+			pointToLayer: (school: Feature, latlng: LatLngExpression) => {
+				const icon = Leaflet.icon({
+					...(commonIconProps as Partial<IconOptions>),
+					iconUrl: schoolsUnderConstructionSvg,
+				})
+				return Leaflet.marker(latlng, { icon })
+			},
 		}).addTo(map.current as Map)
-	}, [schoolsUnderConstructionData])
-
-	// Наносим на карту рекомендованные месторасположения школ.
-	useEffect(() => {
-		const onEachFeature = (
-			school: Feature<any, IRecommendedSchoolLocation['properties']>,
-			layer: Layer,
-		) => {
-			layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
-		}
-
-		const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
-			const icon = Leaflet.icon({
-				...(commonIconProps as Partial<IconOptions>),
-				iconUrl: greenFlagSvg,
-			})
-			return Leaflet.marker(latlng, { icon })
-		}
 
 		Leaflet.geoJSON(recommendedSchoolLocationsData, {
-			onEachFeature,
-			pointToLayer,
+			onEachFeature: (
+				school: Feature<any, IRecommendedSchoolLocation['properties']>,
+				layer: Layer,
+			) => {
+				layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
+			},
+			pointToLayer: (school: Feature, latlng: LatLngExpression) => {
+				const icon = Leaflet.icon({
+					...(commonIconProps as Partial<IconOptions>),
+					iconUrl: greenFlagSvg,
+				})
+				return Leaflet.marker(latlng, { icon })
+			},
 		}).addTo(map.current as Map)
-	}, [recommendedSchoolLocationsData])
+	}, [
+		mfcProblemCellsData,
+		recommendedSchoolLocationsData,
+		schoolProblemCellsData,
+		schoolsUnderConstructionData,
+	])
+
+	// Наносим на карту информацию о потребности в школах.
+	// useEffect(() => {
+	// 	Leaflet.geoJSON(schoolProblemCellsData, {
+	// 		filter: (cell) => !!cell.properties.is_out_overload,
+	// 		style: {
+	// 			color: 'black',
+	// 			fillColor: '#cf0000',
+	// 			fillOpacity: 0.6,
+	// 			weight: 1,
+	// 		},
+	// 	}).addTo(map.current as Map)
+	// }, [schoolProblemCellsData])
+
+	// // Наносим на карту информацию о потребности в МФЦ.
+	// useEffect(() => {
+	// 	Leaflet.geoJSON(mfcProblemCellsData, {
+	// 		style: {
+	// 			color: 'black',
+	// 			fillColor: '#cf0000',
+	// 			fillOpacity: 0.6,
+	// 			weight: 1,
+	// 		},
+	// 	}).addTo(map.current as Map)
+	// }, [mfcProblemCellsData])
+
+	// // Наносим на карту информацию о строящихся школах.
+	// useEffect(() => {
+	// 	const onEachFeature = (
+	// 		school: Feature<any, ISchoolUnderConstruction['properties']>,
+	// 		layer: Layer,
+	// 	) => {
+	// 		layer.bindPopup(
+	// 			`
+	// <strong>Имя объекта</strong>: ${school.properties.ObjectName}<br/>
+	// <strong>Кадастровый номер</strong>: ${school.properties.CadastralNumber}<br/>
+	// <strong>Имя документа</strong>: ${school.properties.GPZUDocumentNumber}
+	// `,
+	// 			{ maxWidth: 400 },
+	// 		)
+	// 	}
+
+	// 	const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
+	// 		const icon = Leaflet.icon({
+	// 			...(commonIconProps as Partial<IconOptions>),
+	// 			iconUrl: schoolsUnderConstructionSvg,
+	// 		})
+	// 		return Leaflet.marker(latlng, { icon })
+	// 	}
+
+	// 	Leaflet.geoJSON(schoolsUnderConstructionData, {
+	// 		onEachFeature,
+	// 		pointToLayer,
+	// 	}).addTo(map.current as Map)
+	// }, [schoolsUnderConstructionData])
+
+	// // Наносим на карту рекомендованные месторасположения школ.
+	// useEffect(() => {
+	// 	const onEachFeature = (
+	// 		school: Feature<any, IRecommendedSchoolLocation['properties']>,
+	// 		layer: Layer,
+	// 	) => {
+	// 		layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
+	// 	}
+
+	// 	const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
+	// 		const icon = Leaflet.icon({
+	// 			...(commonIconProps as Partial<IconOptions>),
+	// 			iconUrl: greenFlagSvg,
+	// 		})
+	// 		return Leaflet.marker(latlng, { icon })
+	// 	}
+
+	// 	Leaflet.geoJSON(recommendedSchoolLocationsData, {
+	// 		onEachFeature,
+	// 		pointToLayer,
+	// 	}).addTo(map.current as Map)
+	// }, [recommendedSchoolLocationsData])
 
 	return (
 		<div className={s.Layout}>

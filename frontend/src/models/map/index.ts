@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // Data
 import administrativeDistrictsData from '../../data/administrative-districts.json'
-// import mfcProblemCellsData from '../../data/mfc-problem-cells.json'
+import mfcProblemCellsData from '../../data/mfc-problem-cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
-// import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
-// import schoolProblemCellsData from '../../data/school-problem-cells.json'
-// import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
+import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
+import schoolProblemCellsData from '../../data/school-problem-cells.json'
+import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
 
 const initialState: IState = {
 	administrativeDistrictsData: {
@@ -43,14 +43,15 @@ const slice = createSlice({
 		initializeStaticMapData: (state) => {
 			// @ts-ignore
 			state.administrativeDistrictsData = administrativeDistrictsData
-			// state.mfcProblemCellsData = mfcProblemCellsData as IGeoData<IProblemCell>
+			state.mfcProblemCellsData = mfcProblemCellsData as IGeoData<IProblemCell>
 			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
-			// state.recommendedSchoolLocationsData =
-			// 	recommendedSchoolLocationsData as IGeoData<IRecommendedSchoolLocation>
-			// state.schoolProblemCellsData = schoolProblemCellsData as IGeoData<ISchoolProblemCell>
-			// state.schoolsUnderConstructionData =
-			// 	schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
+			state.recommendedSchoolLocationsData =
+				recommendedSchoolLocationsData as IGeoData<IRecommendedSchoolLocation>
+			// @ts-ignore
+			state.schoolProblemCellsData = schoolProblemCellsData
+			state.schoolsUnderConstructionData =
+				schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
 		},
 		setShownInfrastructureType: (state, action) => {
 			state.shownInfrastructureType = action.payload
