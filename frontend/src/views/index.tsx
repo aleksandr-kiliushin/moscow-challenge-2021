@@ -153,8 +153,17 @@ const _App = ({
 
 		const suggestedOfficesToBuyDataLayer = Leaflet.geoJSON(suggestedOfficesToBuyData, {
 			onEachFeature: (office: Feature<any, ISuggestedOfficeToBuy['properties']>, layer: Layer) => {
-				const { ObjectArea } = office.properties
-				layer.bindPopup(`Помещение на ${ObjectArea} м2`, { maxWidth: 400 })
+				const { Address, ObjectArea } = office.properties
+				layer.bindPopup(
+					`
+Помещение в собственности г. Москвы
+<br/>
+<strong>Площадь</strong>: ${ObjectArea} м2
+<br />
+<strong>Адрес</strong>: ${Address}
+`,
+					{ maxWidth: 400 },
+				)
 			},
 			pointToLayer: (school: Feature, latlng: LatLngExpression) =>
 				Leaflet.marker(latlng, { icon: greenFlagIconMini }),
