@@ -9,7 +9,7 @@ export const ModalHeader = ({ children, cnModalHeader = '' }: IProps) => {
 		[cnModalHeader]: !!cnModalHeader,
 	})
 
-	return <h2 className={cxModalHeader}>{children}</h2>
+	return <h4 className={cxModalHeader}>{children}</h4>
 }
 
 interface IProps {
