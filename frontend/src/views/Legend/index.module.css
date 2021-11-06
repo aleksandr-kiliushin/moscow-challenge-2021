@@ -33,3 +33,9 @@
 	width: 20px;
 	margin: -1px -1px 0 0;
 }
+
+.ModalHeader {
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+}
