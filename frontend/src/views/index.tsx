@@ -21,7 +21,6 @@ import { IconOptions, LatLngExpression } from 'leaflet'
 import { ConnectedProps } from 'react-redux'
 import { AppDispatch, RootState } from '#models/store'
 import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
-import { InfrastructureTypeSelect } from './InfrastructureTypeSelect/Legend'
 
 const _App = ({
 	administrativeDistrictsData,
@@ -31,7 +30,6 @@ const _App = ({
 	recommendedSchoolLocationsData,
 	schoolProblemCellsData,
 	schoolsUnderConstructionData,
-	shownInfrastructureType,
 }: IProps) => {
 	const map = useRef<Map | null>(null)
 
@@ -47,46 +45,40 @@ const _App = ({
 	useEffect(() => {
 		// Инициализируем получение данных при запуске приложения.
 		initializeStaticMapData()
-
-		// Фиксируем окно с картой по координатам Москвы.
-		map.current = Leaflet.map('mapId').setView([55.6, 37.4], 10)
-
-		// Отображаем географическую карту на подложке.
-		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-		}).addTo(map.current)
 	}, [])
 
-	// Наносим на карту административные и муниципальные районы.
 	useEffect(() => {
-		if (!administrativeDistrictsData.features.length || !municipalDistrictsData.features.length) {
+		if (
+			!mfcProblemCellsData.features.length ||
+			!recommendedSchoolLocationsData.features.length ||
+			!schoolProblemCellsData.features.length ||
+			!schoolsUnderConstructionData.features.length ||
+			!administrativeDistrictsData.features.length ||
+			!municipalDistrictsData.features.length
+		) {
 			return
 		}
 
-		Leaflet.geoJSON(administrativeDistrictsData, {
+		const tileLayer = Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+		})
+
+		const administrativeDistrictsDataLayer = Leaflet.geoJSON(administrativeDistrictsData, {
 			style: {
 				color: '#444',
 				fill: false,
 				weight: 5,
 			},
-		}).addTo(map.current as Map)
+		})
 
-		const onEachFeature = (district: Feature<Geometry, any>, layer: Layer) => {
-			layer.bindPopup(district.properties.NAME, {
-				maxWidth: 450,
-			})
-		}
-		Leaflet.geoJSON(municipalDistrictsData, {
-			onEachFeature,
+		const municipalDistrictsDataLayer = Leaflet.geoJSON(municipalDistrictsData, {
+			onEachFeature: (district: Feature<Geometry, any>, layer: Layer) => {
+				layer.bindPopup(district.properties.NAME, {
+					maxWidth: 450,
+				})
+			},
 			style: (municipalDistrict) => {
 				const isDistrictBad = false
-				// const isDistrictBad = [
-				// 	'Кокошкино',
-				// 	'Ново-Переделкино',
-				// 	'Московский',
-				// 	'Солнцево',
-				// 	'Щербинка',
-				// ].includes(municipalDistrict?.properties.NAME)
 
 				return {
 					color: '#888',
@@ -95,39 +87,27 @@ const _App = ({
 					weight: 2,
 				}
 			},
-		}).addTo(map.current as Map)
-	}, [administrativeDistrictsData, municipalDistrictsData])
+		})
 
-	// Наносим на карту информацию об объектах инфраструктуры.
-	useEffect(() => {
-		if (
-			!mfcProblemCellsData.features.length ||
-			!recommendedSchoolLocationsData.features.length ||
-			!schoolProblemCellsData.features.length ||
-			!schoolsUnderConstructionData.features.length
-		) {
-			return
-		}
-
-		Leaflet.geoJSON(schoolProblemCellsData, {
+		const schoolProblemCellsDataLayer = Leaflet.geoJSON(schoolProblemCellsData, {
 			style: {
 				color: 'black',
 				fillColor: '#cf0000',
 				fillOpacity: 0.6,
 				weight: 1,
 			},
-		}).addTo(map.current as Map)
+		})
 
-		// Leaflet.geoJSON(mfcProblemCellsData, {
-		// 	style: {
-		// 		color: 'black',
-		// 		fillColor: '#cf0000',
-		// 		fillOpacity: 0.6,
-		// 		weight: 1,
-		// 	},
-		// }).addTo(map.current as Map)
+		const mfcProblemCellsDataLayer = Leaflet.geoJSON(mfcProblemCellsData, {
+			style: {
+				color: 'black',
+				fillColor: '#cf0000',
+				fillOpacity: 0.6,
+				weight: 1,
+			},
+		})
 
-		Leaflet.geoJSON(schoolsUnderConstructionData, {
+		const schoolsUnderConstructionDataLayer = Leaflet.geoJSON(schoolsUnderConstructionData, {
 			onEachFeature: (
 				school: Feature<any, ISchoolUnderConstruction['properties']>,
 				layer: Layer,
@@ -148,9 +128,9 @@ const _App = ({
 				})
 				return Leaflet.marker(latlng, { icon })
 			},
-		}).addTo(map.current as Map)
+		})
 
-		Leaflet.geoJSON(recommendedSchoolLocationsData, {
+		const recommendedSchoolLocationsDataLayer = Leaflet.geoJSON(recommendedSchoolLocationsData, {
 			onEachFeature: (
 				school: Feature<any, IRecommendedSchoolLocation['properties']>,
 				layer: Layer,
@@ -164,97 +144,44 @@ const _App = ({
 				})
 				return Leaflet.marker(latlng, { icon })
 			},
-		}).addTo(map.current as Map)
+		})
+
+		const mfcLayerGroup = Leaflet.layerGroup([mfcProblemCellsDataLayer])
+		const districtsLayerGroup = Leaflet.layerGroup([
+			administrativeDistrictsDataLayer,
+			municipalDistrictsDataLayer,
+		])
+		const schoolsLayerGroup = Leaflet.layerGroup([
+			recommendedSchoolLocationsDataLayer,
+			schoolProblemCellsDataLayer,
+			schoolsUnderConstructionDataLayer,
+		])
+
+		const baseMaps = {
+			Школы: schoolsLayerGroup,
+			МФЦ: mfcLayerGroup,
+		}
+
+		map.current = Leaflet.map('mapId', {
+			center: [55.6, 37.4],
+			zoom: 10,
+			layers: [districtsLayerGroup, schoolsLayerGroup, tileLayer],
+		})
+
+		Leaflet.control.layers(baseMaps, {}).addTo(map.current as Map)
 	}, [
+		administrativeDistrictsData,
 		mfcProblemCellsData,
+		municipalDistrictsData,
 		recommendedSchoolLocationsData,
 		schoolProblemCellsData,
 		schoolsUnderConstructionData,
 	])
 
-	// Наносим на карту информацию о потребности в школах.
-	// useEffect(() => {
-	// 	Leaflet.geoJSON(schoolProblemCellsData, {
-	// 		filter: (cell) => !!cell.properties.is_out_overload,
-	// 		style: {
-	// 			color: 'black',
-	// 			fillColor: '#cf0000',
-	// 			fillOpacity: 0.6,
-	// 			weight: 1,
-	// 		},
-	// 	}).addTo(map.current as Map)
-	// }, [schoolProblemCellsData])
-
-	// // Наносим на карту информацию о потребности в МФЦ.
-	// useEffect(() => {
-	// 	Leaflet.geoJSON(mfcProblemCellsData, {
-	// 		style: {
-	// 			color: 'black',
-	// 			fillColor: '#cf0000',
-	// 			fillOpacity: 0.6,
-	// 			weight: 1,
-	// 		},
-	// 	}).addTo(map.current as Map)
-	// }, [mfcProblemCellsData])
-
-	// // Наносим на карту информацию о строящихся школах.
-	// useEffect(() => {
-	// 	const onEachFeature = (
-	// 		school: Feature<any, ISchoolUnderConstruction['properties']>,
-	// 		layer: Layer,
-	// 	) => {
-	// 		layer.bindPopup(
-	// 			`
-	// <strong>Имя объекта</strong>: ${school.properties.ObjectName}<br/>
-	// <strong>Кадастровый номер</strong>: ${school.properties.CadastralNumber}<br/>
-	// <strong>Имя документа</strong>: ${school.properties.GPZUDocumentNumber}
-	// `,
-	// 			{ maxWidth: 400 },
-	// 		)
-	// 	}
-
-	// 	const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
-	// 		const icon = Leaflet.icon({
-	// 			...(commonIconProps as Partial<IconOptions>),
-	// 			iconUrl: schoolsUnderConstructionSvg,
-	// 		})
-	// 		return Leaflet.marker(latlng, { icon })
-	// 	}
-
-	// 	Leaflet.geoJSON(schoolsUnderConstructionData, {
-	// 		onEachFeature,
-	// 		pointToLayer,
-	// 	}).addTo(map.current as Map)
-	// }, [schoolsUnderConstructionData])
-
-	// // Наносим на карту рекомендованные месторасположения школ.
-	// useEffect(() => {
-	// 	const onEachFeature = (
-	// 		school: Feature<any, IRecommendedSchoolLocation['properties']>,
-	// 		layer: Layer,
-	// 	) => {
-	// 		layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
-	// 	}
-
-	// 	const pointToLayer = (school: Feature, latlng: LatLngExpression) => {
-	// 		const icon = Leaflet.icon({
-	// 			...(commonIconProps as Partial<IconOptions>),
-	// 			iconUrl: greenFlagSvg,
-	// 		})
-	// 		return Leaflet.marker(latlng, { icon })
-	// 	}
-
-	// 	Leaflet.geoJSON(recommendedSchoolLocationsData, {
-	// 		onEachFeature,
-	// 		pointToLayer,
-	// 	}).addTo(map.current as Map)
-	// }, [recommendedSchoolLocationsData])
-
 	return (
 		<div className={s.Layout}>
 			<div id="mapId" />
 			<Legend />
-			<InfrastructureTypeSelect />
 		</div>
 	)
 }
@@ -266,7 +193,6 @@ const mapStateToProps = (state: RootState) => ({
 	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
 	schoolProblemCellsData: state.map.schoolProblemCellsData,
 	schoolsUnderConstructionData: state.map.schoolsUnderConstructionData,
-	shownInfrastructureType: state.map.shownInfrastructureType,
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
@@ -278,3 +204,11 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type IProps = ConnectedProps<typeof connector>
 
 export const App = connector(_App)
+
+// const isDistrictBad = [
+// 	'Кокошкино',
+// 	'Ново-Переделкино',
+// 	'Московский',
+// 	'Солнцево',
+// 	'Щербинка',
+// ].includes(municipalDistrict?.properties.NAME)

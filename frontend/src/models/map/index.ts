@@ -33,7 +33,6 @@ const initialState: IState = {
 		features: [],
 		type: 'FeatureCollection',
 	},
-	shownInfrastructureType: 'schools',
 }
 
 const slice = createSlice({
@@ -53,13 +52,10 @@ const slice = createSlice({
 			state.schoolsUnderConstructionData =
 				schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
 		},
-		setShownInfrastructureType: (state, action) => {
-			state.shownInfrastructureType = action.payload
-		},
 	},
 })
 
-export const { initializeStaticMapData, setShownInfrastructureType } = slice.actions
+export const { initializeStaticMapData } = slice.actions
 export const mapReducer = slice.reducer
 
 // Types
@@ -70,7 +66,6 @@ interface IState {
 	recommendedSchoolLocationsData: IGeoData<IRecommendedSchoolLocation>
 	schoolProblemCellsData: IGeoData<IProblemCell>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
-	shownInfrastructureType: IInfrastructureType
 }
 
 interface IGeoData<F> {
@@ -140,5 +135,3 @@ export interface ISchoolUnderConstruction {
 	geometry: IPointGeometry
 	type: 'Feature'
 }
-
-export type IInfrastructureType = 'mfc' | 'schools'
