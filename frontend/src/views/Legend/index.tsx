@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 // Components
+import { Modal } from '#components/Modal'
+import { ModalHeader } from '#components/Modal/ModalHeader'
 import { LegendItem } from './LegendItem'
 
 // Styles
@@ -9,8 +11,6 @@ import s from './index.module.css'
 // Assets
 import greenFlagSvg from '../../assets/green-flag.svg'
 import objectUnderConstructionSvg from '../../assets/school-under-construction.svg'
-import { Modal } from '#components/Modal'
-import { ModalHeader } from '#components/Modal/ModalHeader'
 
 // Types
 import { ReactNode } from 'react'
@@ -18,9 +18,38 @@ import { ReactNode } from 'react'
 export const Legend = () => {
 	const [shownLegendItem, setShownLegendItem] = useState<ILegendItem | null>(null)
 
-	const problemPolygonDescription = <div>hehe</div>
-	const objectUnderConstructionDescription = <div>hehe</div>
-	const suggestedOfficesToBuyDescription = <div>hehe</div>
+	const problemPolygonDescription = (
+		<div>
+			<p>
+				Локации красного цвета обозначают зоны, в которых люди вынуждены ходить в соседние районы
+				для посещения школ, МЦФ или других объектов социальной инфраструктуры (в зависимости от
+				выбранного слоя).
+			</p>
+			<br />
+			<p>
+				Причинами необходимости может быть отсутствие или перегруженность объектов социальной
+				инфраструктуры вблизи места жительства граждан.
+			</p>
+		</div>
+	)
+
+	const objectUnderConstructionDescription = (
+		<div>
+			<p>
+				Объекты социальной инфраструктуры в стадии строительства, являющиеся собственностью города
+				Москвы.
+			</p>
+		</div>
+	)
+
+	const suggestedOfficesToBuyDescription = (
+		<div>
+			<p>
+				Список имущества (здания, сооружения, земли), которое можно использовать для строительства,
+				сдачи в аренду и т. д. – размещения объекта инфраструктуры
+			</p>
+		</div>
+	)
 
 	return (
 		<>
