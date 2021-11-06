@@ -56,7 +56,7 @@ export const Legend = () => {
 			<div className={s.Legend}>
 				<LegendItem
 					description={problemPolygonDescription}
-					label="Локация в повышенным и неудовлетворенным спросом"
+					label="Локация с повышенным и неудовлетворенным спросом"
 					labelWidth={240}
 					setShownLegendItem={setShownLegendItem}
 				>
