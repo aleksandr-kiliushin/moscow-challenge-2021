@@ -16,7 +16,7 @@ const processCsv = async () => {
 
 	const parsedData = csvParsed.data
 
-	const filteredData = parsedData.filter((office) => Number(office.ObjectArea) >= 300)
+	const filteredData = parsedData.filter((office) => Number(office.ObjectArea) >= 500)
 
 	const prettifiedData = filteredData.map(({ coordinates, ...rest }) => ({
 		geometry: {

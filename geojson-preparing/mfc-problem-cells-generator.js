@@ -36,7 +36,7 @@ const processCsv = async () => {
 		features: prettifiedData,
 	}
 
-	fs.writeFileSync('./output/mfc-problem-cells-2.json', JSON.stringify(output))
+	fs.writeFileSync('./output/mfc-problem-cells.json', JSON.stringify(output))
 }
 
 processCsv()

@@ -86,6 +86,7 @@ const _App = ({
 
 		const tileLayer = Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+			detectRetina: true,
 		})
 
 		const administrativeDistrictsDataLayer = Leaflet.geoJSON(administrativeDistrictsData, {
@@ -159,10 +160,13 @@ const _App = ({
 				Leaflet.marker(latlng, { icon: greenFlagIconMini }),
 		})
 
-		const mfcLayerGroup = Leaflet.layerGroup([mfcProblemCellsDataLayer])
 		const districtsLayerGroup = Leaflet.layerGroup([
 			administrativeDistrictsDataLayer,
 			municipalDistrictsDataLayer,
+		])
+		const mfcLayerGroup = Leaflet.layerGroup([
+			mfcProblemCellsDataLayer,
+			suggestedOfficesToBuyDataLayer,
 		])
 		const schoolsLayerGroup = Leaflet.layerGroup([
 			schoolProblemCellsDataLayer,
