@@ -4,7 +4,7 @@ const fs = require('fs')
 const Papa = require('papaparse')
 
 const processCsv = async () => {
-	const csvFile = fs.readFileSync('./input/cell-stats-output-v4-mfc.csv')
+	const csvFile = fs.readFileSync('./input/mfc-problem-cells.csv')
 	const csvData = csvFile.toString()
 
 	const csvParsed = Papa.parse(csvData, {
@@ -15,12 +15,10 @@ const processCsv = async () => {
 	})
 
 	const parsedData = csvParsed.data
+	// parsedData.length = csvParsed.data.length - 1
+	parsedData.pop()
 
-	const filteredData = parsedData.filter(
-		(cell) => cell.is_in_overload_cross_mean === 'True' && cell.month === 'July',
-	)
-
-	const prettifiedData = filteredData.map((cell) => ({
+	const prettifiedData = parsedData.map((cell) => ({
 		geometry: {
 			coordinates: [JSON.parse(cell.coordinates)],
 			type: 'Polygon',
@@ -31,12 +29,14 @@ const processCsv = async () => {
 		type: 'Feature',
 	}))
 
+	console.log(prettifiedData)
+
 	const output = {
 		type: 'FeatureCollection',
 		features: prettifiedData,
 	}
 
-	fs.writeFileSync('./output/mfc-problem-cells.json', JSON.stringify(output))
+	fs.writeFileSync('./output/mfc-problem-cells-2.json', JSON.stringify(output))
 }
 
 processCsv()
