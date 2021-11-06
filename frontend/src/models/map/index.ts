@@ -4,35 +4,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import administrativeDistrictsData from '../../data/administrative-districts.json'
 import mfcProblemCellsData from '../../data/mfc-problem-cells.json'
 import municipalDistrictsData from '../../data/municipal-districts.json'
-import recommendedSchoolLocationsData from '../../data/recommended-school-locations.json'
 import schoolProblemCellsData from '../../data/school-problem-cells.json'
 import schoolsUnderConstructionData from '../../data/schools-under-construction.json'
+import suggestedOfficesToBuyData from '../../data/suggested-offices-to-buy.json'
 
 const initialState: IState = {
-	administrativeDistrictsData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
-	municipalDistrictsData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
-	recommendedSchoolLocationsData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
-	schoolProblemCellsData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
-	mfcProblemCellsData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
-	schoolsUnderConstructionData: {
-		features: [],
-		type: 'FeatureCollection',
-	},
+	administrativeDistrictsData: { features: [], type: 'FeatureCollection' },
+	mfcProblemCellsData: { features: [], type: 'FeatureCollection' },
+	municipalDistrictsData: { features: [], type: 'FeatureCollection' },
+	schoolProblemCellsData: { features: [], type: 'FeatureCollection' },
+	schoolsUnderConstructionData: { features: [], type: 'FeatureCollection' },
+	suggestedOfficesToBuyData: { features: [], type: 'FeatureCollection' },
 }
 
 const slice = createSlice({
@@ -45,12 +27,11 @@ const slice = createSlice({
 			state.mfcProblemCellsData = mfcProblemCellsData as IGeoData<IProblemCell>
 			// @ts-ignore
 			state.municipalDistrictsData = municipalDistrictsData
-			state.recommendedSchoolLocationsData =
-				recommendedSchoolLocationsData as IGeoData<IRecommendedSchoolLocation>
 			// @ts-ignore
 			state.schoolProblemCellsData = schoolProblemCellsData
 			state.schoolsUnderConstructionData =
 				schoolsUnderConstructionData as IGeoData<ISchoolUnderConstruction>
+			state.suggestedOfficesToBuyData = suggestedOfficesToBuyData as IGeoData<ISuggestedOfficeToBuy>
 		},
 	},
 })
@@ -63,9 +44,9 @@ interface IState {
 	administrativeDistrictsData: IGeoData<IAdministrativeDistrict>
 	mfcProblemCellsData: IGeoData<IProblemCell>
 	municipalDistrictsData: IGeoData<IMunicipalDistrict>
-	recommendedSchoolLocationsData: IGeoData<IRecommendedSchoolLocation>
 	schoolProblemCellsData: IGeoData<IProblemCell>
 	schoolsUnderConstructionData: IGeoData<ISchoolUnderConstruction>
+	suggestedOfficesToBuyData: IGeoData<ISuggestedOfficeToBuy>
 }
 
 interface IGeoData<F> {
@@ -120,17 +101,26 @@ interface IMunicipalDistrict {
 	type: 'Feature'
 }
 
-export interface IRecommendedSchoolLocation {
-	properties: {}
-	geometry: IPointGeometry
-	type: 'Feature'
-}
-
 export interface ISchoolUnderConstruction {
 	properties: {
 		CadastralNumber: string
 		GPZUDocumentNumber: string
 		ObjectName: string
+	}
+	geometry: IPointGeometry
+	type: 'Feature'
+}
+
+export interface ISuggestedOfficeToBuy {
+	properties: {
+		'': string
+		AdmArea: string
+		District: string
+		Address: string
+		PropertyType: string
+		ObjectArea: number
+		Note: string
+		global_id: string
 	}
 	geometry: IPointGeometry
 	type: 'Feature'

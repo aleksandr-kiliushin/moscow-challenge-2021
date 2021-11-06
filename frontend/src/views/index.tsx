@@ -20,16 +20,16 @@ import { Feature, Geometry } from 'geojson'
 import { IconOptions, LatLngExpression } from 'leaflet'
 import { ConnectedProps } from 'react-redux'
 import { AppDispatch, RootState } from '#models/store'
-import { IRecommendedSchoolLocation, ISchoolUnderConstruction } from '#models/map'
+import { ISchoolUnderConstruction, ISuggestedOfficeToBuy } from '#models/map'
 
 const _App = ({
 	administrativeDistrictsData,
 	initializeStaticMapData,
 	mfcProblemCellsData,
 	municipalDistrictsData,
-	recommendedSchoolLocationsData,
 	schoolProblemCellsData,
 	schoolsUnderConstructionData,
+	suggestedOfficesToBuyData,
 }: IProps) => {
 	const map = useRef<Map | null>(null)
 
@@ -49,12 +49,12 @@ const _App = ({
 
 	useEffect(() => {
 		if (
+			!administrativeDistrictsData.features.length ||
 			!mfcProblemCellsData.features.length ||
-			!recommendedSchoolLocationsData.features.length ||
+			!municipalDistrictsData.features.length ||
 			!schoolProblemCellsData.features.length ||
 			!schoolsUnderConstructionData.features.length ||
-			!administrativeDistrictsData.features.length ||
-			!municipalDistrictsData.features.length
+			!suggestedOfficesToBuyData.features.length
 		) {
 			return
 		}
@@ -130,12 +130,10 @@ const _App = ({
 			},
 		})
 
-		const recommendedSchoolLocationsDataLayer = Leaflet.geoJSON(recommendedSchoolLocationsData, {
-			onEachFeature: (
-				school: Feature<any, IRecommendedSchoolLocation['properties']>,
-				layer: Layer,
-			) => {
-				layer.bindPopup('Рекомендуемое месторасположение школы.', { maxWidth: 400 })
+		const suggestedOfficesToBuyDataLayer = Leaflet.geoJSON(suggestedOfficesToBuyData, {
+			onEachFeature: (office: Feature<any, ISuggestedOfficeToBuy['properties']>, layer: Layer) => {
+				const { PropertyType, ObjectArea } = office.properties
+				layer.bindPopup(`${PropertyType} на ${ObjectArea} м2`, { maxWidth: 400 })
 			},
 			pointToLayer: (school: Feature, latlng: LatLngExpression) => {
 				const icon = Leaflet.icon({
@@ -152,9 +150,9 @@ const _App = ({
 			municipalDistrictsDataLayer,
 		])
 		const schoolsLayerGroup = Leaflet.layerGroup([
-			recommendedSchoolLocationsDataLayer,
 			schoolProblemCellsDataLayer,
 			schoolsUnderConstructionDataLayer,
+			suggestedOfficesToBuyDataLayer,
 		])
 
 		const baseMaps = {
@@ -173,9 +171,9 @@ const _App = ({
 		administrativeDistrictsData,
 		mfcProblemCellsData,
 		municipalDistrictsData,
-		recommendedSchoolLocationsData,
 		schoolProblemCellsData,
 		schoolsUnderConstructionData,
+		suggestedOfficesToBuyData,
 	])
 
 	return (
@@ -190,9 +188,9 @@ const mapStateToProps = (state: RootState) => ({
 	administrativeDistrictsData: state.map.administrativeDistrictsData,
 	mfcProblemCellsData: state.map.mfcProblemCellsData,
 	municipalDistrictsData: state.map.municipalDistrictsData,
-	recommendedSchoolLocationsData: state.map.recommendedSchoolLocationsData,
 	schoolProblemCellsData: state.map.schoolProblemCellsData,
 	schoolsUnderConstructionData: state.map.schoolsUnderConstructionData,
+	suggestedOfficesToBuyData: state.map.suggestedOfficesToBuyData,
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
