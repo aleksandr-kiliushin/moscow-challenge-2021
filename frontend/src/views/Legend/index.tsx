@@ -13,7 +13,7 @@ import schoolsUnderConstructionSvg from '../../assets/school-under-construction.
 export const Legend = () => {
 	return (
 		<div className={s.Legend}>
-			<LegendItem label="Локация в повышенным и неудовлетворенным спросом">
+			<LegendItem label="Локация в повышенным и неудовлетворенным спросом" labelWidth={240}>
 				<div className={s.ProblemPolygonLegendIcon}>
 					<div className={s.ProblemPolygon} />
 					<div className={s.ProblemPolygon} />
@@ -21,11 +21,11 @@ export const Legend = () => {
 				</div>
 			</LegendItem>
 
-			<LegendItem label="Объект в стадии строительства">
+			<LegendItem label="Объект в стадии строительства" labelWidth={130}>
 				<img className={s.LegendIcon} src={schoolsUnderConstructionSvg} />
 			</LegendItem>
 
-			<LegendItem label="Рекомендуемое месторасположение">
+			<LegendItem label="Рекомендуемое месторасположение" labelWidth={160}>
 				<img className={s.LegendIcon} src={greenFlagSvg} />
 			</LegendItem>
 		</div>
