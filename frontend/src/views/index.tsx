@@ -41,6 +41,31 @@ const _App = ({
 		}),
 		[],
 	)
+	const commonIconPropsMini = useMemo(
+		() => ({
+			iconSize: [24, 24],
+			iconAnchor: [12, 24],
+			popupAnchor: [1, -24],
+		}),
+		[],
+	)
+
+	const greenFlagIcon = Leaflet.icon({
+		...(commonIconProps as Partial<IconOptions>),
+		iconUrl: greenFlagSvg,
+	})
+	const greenFlagIconMini = Leaflet.icon({
+		...(commonIconPropsMini as Partial<IconOptions>),
+		iconUrl: greenFlagSvg,
+	})
+	const objectUnderContructionIcon = Leaflet.icon({
+		...(commonIconProps as Partial<IconOptions>),
+		iconUrl: schoolsUnderConstructionSvg,
+	})
+	const objectUnderContructionIconMini = Leaflet.icon({
+		...(commonIconPropsMini as Partial<IconOptions>),
+		iconUrl: schoolsUnderConstructionSvg,
+	})
 
 	useEffect(() => {
 		// Инициализируем получение данных при запуске приложения.
@@ -121,13 +146,8 @@ const _App = ({
 					{ maxWidth: 400 },
 				)
 			},
-			pointToLayer: (school: Feature, latlng: LatLngExpression) => {
-				const icon = Leaflet.icon({
-					...(commonIconProps as Partial<IconOptions>),
-					iconUrl: schoolsUnderConstructionSvg,
-				})
-				return Leaflet.marker(latlng, { icon })
-			},
+			pointToLayer: (school: Feature, latlng: LatLngExpression) =>
+				Leaflet.marker(latlng, { icon: objectUnderContructionIconMini }),
 		})
 
 		const suggestedOfficesToBuyDataLayer = Leaflet.geoJSON(suggestedOfficesToBuyData, {
@@ -135,13 +155,8 @@ const _App = ({
 				const { ObjectArea } = office.properties
 				layer.bindPopup(`Помещение на ${ObjectArea} м2`, { maxWidth: 400 })
 			},
-			pointToLayer: (school: Feature, latlng: LatLngExpression) => {
-				const icon = Leaflet.icon({
-					...(commonIconProps as Partial<IconOptions>),
-					iconUrl: greenFlagSvg,
-				})
-				return Leaflet.marker(latlng, { icon })
-			},
+			pointToLayer: (school: Feature, latlng: LatLngExpression) =>
+				Leaflet.marker(latlng, { icon: greenFlagIconMini }),
 		})
 
 		const mfcLayerGroup = Leaflet.layerGroup([mfcProblemCellsDataLayer])
@@ -167,6 +182,33 @@ const _App = ({
 		})
 
 		Leaflet.control.layers(baseMaps, {}).addTo(map.current as Map)
+
+		map.current.on('zoomend', () => {
+			const currentZoom = (map.current as Map).getZoom()
+			if (currentZoom > 10) {
+				suggestedOfficesToBuyDataLayer.eachLayer((layer) => {
+					if (layer instanceof Leaflet.Marker) {
+						layer.setIcon(greenFlagIcon)
+					}
+				})
+				schoolsUnderConstructionDataLayer.eachLayer((layer) => {
+					if (layer instanceof Leaflet.Marker) {
+						layer.setIcon(objectUnderContructionIcon)
+					}
+				})
+			} else {
+				suggestedOfficesToBuyDataLayer.eachLayer((layer) => {
+					if (layer instanceof Leaflet.Marker) {
+						layer.setIcon(greenFlagIconMini)
+					}
+				})
+				schoolsUnderConstructionDataLayer.eachLayer((layer) => {
+					if (layer instanceof Leaflet.Marker) {
+						layer.setIcon(objectUnderContructionIconMini)
+					}
+				})
+			}
+		})
 	}, [
 		administrativeDistrictsData,
 		mfcProblemCellsData,
