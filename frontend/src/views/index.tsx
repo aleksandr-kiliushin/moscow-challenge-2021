@@ -133,7 +133,7 @@ const _App = ({
 		const suggestedOfficesToBuyDataLayer = Leaflet.geoJSON(suggestedOfficesToBuyData, {
 			onEachFeature: (office: Feature<any, ISuggestedOfficeToBuy['properties']>, layer: Layer) => {
 				const { PropertyType, ObjectArea } = office.properties
-				layer.bindPopup(`${PropertyType} на ${ObjectArea} м2`, { maxWidth: 400 })
+				layer.bindPopup(`Помещение на ${ObjectArea} м2`, { maxWidth: 400 })
 			},
 			pointToLayer: (school: Feature, latlng: LatLngExpression) => {
 				const icon = Leaflet.icon({
